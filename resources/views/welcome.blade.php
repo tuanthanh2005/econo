@@ -1437,6 +1437,14 @@
             gap: 12px;
             z-index: 999;
             animation: float-bubbles 3s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+        body.cart-open .chat-bubbles-container {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transform: translateY(20px);
         }
 
         .chat-bubble {
@@ -2235,6 +2243,7 @@
             const overlay = document.getElementById('cart-overlay');
             sidebar.classList.toggle('open');
             overlay.classList.toggle('open');
+            document.body.classList.toggle('cart-open');
         }
 
         // Location Modal Controls
