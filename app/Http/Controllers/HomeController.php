@@ -72,7 +72,8 @@ class HomeController extends Controller
             'customer_phone' => 'required|string|max:25',
             'customer_address' => 'required|string|max:500',
             'items' => 'required|json',
-            'notes' => 'nullable|string|max:1000'
+            'notes' => 'nullable|string|max:1000',
+            'shipping_fee' => 'nullable|numeric'
         ]);
 
         $items = json_decode($request->items, true);
@@ -119,8 +120,9 @@ class HomeController extends Controller
                 $totalPrice += $product->price;
             }
 
-            // Update final total price
-            $order->update(['total_price' => $totalPrice]);
+            // Update final total price (including shipping fee)
+            $shippingFee = floatval($request->get('shipping_fee', 0));
+            $order->update(['total_price' => $totalPrice + $shippingFee]);
 
             DB::commit();
             return redirect()->route('order.payment', ['id' => $order->id]);

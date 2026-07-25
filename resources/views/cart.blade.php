@@ -872,6 +872,7 @@
         <form action="/dat-hang" method="POST" id="checkout-form">
             @csrf
             <input type="hidden" name="items" id="checkout-items-json">
+            <input type="hidden" name="shipping_fee" id="checkout-shipping-fee-val" value="0">
             
             <div class="cart-page-layout">
                 
@@ -1170,6 +1171,10 @@
             totalLbl.textContent = formatPrice(finalTotal);
             
             checkoutItemsJson.value = JSON.stringify(cart);
+            const shippingFeeInput = document.getElementById('checkout-shipping-fee-val');
+            if (shippingFeeInput) {
+                shippingFeeInput.value = shippingFee;
+            }
         }
 
         // Toggle User Account Dropdown
