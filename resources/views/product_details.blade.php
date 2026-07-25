@@ -1178,10 +1178,10 @@
 
                 <!-- Header Actions -->
                 <div class="header-actions" style="display: flex; align-items: center; gap: 12px;">
-                    <button class="cart-btn" onclick="toggleCart()">
+                    <a href="/gio-hang" class="cart-btn">
                         <i class="bi bi-bag-dash-fill"></i>
                         <span class="cart-badge" id="cart-badge-count">0</span>
-                    </button>
+                    </a>
                     
                     @auth
                         @if (Auth::user()->role === 'superadmin')
@@ -1274,7 +1274,7 @@
                     <button class="action-btn primary" onclick="addCurrentProductToCart()">
                         <i class="fa-solid fa-cart-plus"></i> Thêm Vào Giỏ Hàng
                     </button>
-                    <button class="action-btn secondary" onclick="toggleCart()">
+                    <button class="action-btn secondary" onclick="window.location.href='/gio-hang'">
                         Xem Giỏ Hàng
                     </button>
                 </div>
@@ -1584,8 +1584,7 @@
                 ...currentProduct
             });
             saveCartToStorage();
-            updateCartUI();
-            toggleCart();
+            window.location.href = '/gio-hang';
         }
 
         // Add related product to cart
@@ -1597,8 +1596,7 @@
                     ...product
                 });
                 saveCartToStorage();
-                updateCartUI();
-                toggleCart();
+                window.location.href = '/gio-hang';
             }
         }
 
