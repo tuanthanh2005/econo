@@ -167,6 +167,8 @@
 
         .location-details {
             text-align: left;
+            max-width: 280px;
+            overflow: hidden;
         }
 
         .location-details span:first-child {
@@ -180,6 +182,10 @@
             font-size: 12px;
             font-weight: 700;
             color: var(--text-main);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Search box */
