@@ -1810,7 +1810,7 @@
                 <button class="location-selector" onclick="openLocationModal()">
                     <span class="location-icon"><i class="bi bi-geo-alt-fill"></i></span>
                     <div class="location-details">
-                        <span>Giao đến địa chỉ:</span>
+                        <span style="display: flex; align-items: center; gap: 6px;">Giao đến địa chỉ: <span id="header-eta-badge" style="background: var(--primary-light); color: var(--primary); font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 6px; white-space: nowrap;">⚡ Đang tính...</span></span>
                         <span id="delivery-address-lbl">Quận 1, TP. Hồ Chí Minh</span>
                     </div>
                 </button>
@@ -2211,7 +2211,7 @@
                 <span>Tổng tiền:</span>
                 <span id="cart-total-lbl">0 đ</span>
             </div>
-            <div class="cart-promo-banner">
+            <div class="cart-promo-banner" id="cart-eta-promo-lbl">
                 <i class="fa-solid fa-circle-check"></i>
                 <span>Giao siêu tốc trong 1-3 tiếng sau khi đặt!</span>
             </div>
@@ -2396,6 +2396,37 @@
             return R * c; // Distance in km
         }
 
+        // Calculate and update approximate shipping time
+        function updateDynamicETA() {
+            const distance = calculateDistance(deliveryLat, deliveryLon, WAREHOUSE_LAT, WAREHOUSE_LON);
+            
+            // Speed of delivery vehicle: approx 35 km/h -> ~1.7 minutes per km
+            // Base prep & packaging time: 20 minutes
+            let etaMinutes = Math.round(20 + distance * 1.7);
+            
+            if (etaMinutes < 25) etaMinutes = 25; // minimum delivery time
+            
+            let etaString = '';
+            if (etaMinutes >= 60) {
+                const hrs = (etaMinutes / 60).toFixed(1);
+                etaString = `${hrs} giờ`;
+            } else {
+                etaString = `${etaMinutes} phút`;
+            }
+
+            // Update Header Badge
+            const headerEta = document.getElementById('header-eta-badge');
+            if (headerEta) {
+                headerEta.textContent = `⚡ Dự kiến: ${etaString} (${distance.toFixed(1)}km)`;
+            }
+
+            // Update Cart Promo Banner
+            const cartPromo = document.getElementById('cart-eta-promo-lbl');
+            if (cartPromo) {
+                cartPromo.innerHTML = `<i class="fa-solid fa-truck-fast text-primary"></i> Giao hỏa tốc khoảng <strong>${etaString}</strong> (${distance.toFixed(1)}km)`;
+            }
+        }
+
         // Add to Cart
         function addToCart(productId) {
             let product = products.find(p => p.id === productId);
@@ -2526,6 +2557,8 @@
                 document.getElementById('delivery-address-lbl').textContent = addr;
                 document.getElementById('checkout-address-input').value = addr;
                 
+                updateDynamicETA();
+                
                 if (isUserLoggedIn) {
                     syncAddressToDatabase(addr);
                 }
@@ -2611,6 +2644,9 @@
                                     if (checkoutInput) {
                                         checkoutInput.value = address;
                                     }
+                                    
+                                    updateDynamicETA();
+                                    
                                     console.log('📍 Tự động bắt vị trí thành công:', address, lat, lon);
                                 }
                             })
@@ -2716,6 +2752,9 @@
                 deliveryLat = lat;
                 deliveryLon = lon;
                 document.getElementById('delivery-address-lbl').textContent = selectedAddr;
+                
+                updateDynamicETA();
+                
                 if (isUserLoggedIn) {
                     syncAddressToDatabase(selectedAddr);
                 }
@@ -2725,6 +2764,18 @@
             const hasSavedAddress = @json(auth()->check() && !empty(auth()->user()->address));
             if (!hasSavedAddress) {
                 detectUserLocation();
+            } else {
+                // If they have a saved address, do a quick geocode to get its lat/lon for distance calculation
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(deliveryAddress)}&countrycodes=vn`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            deliveryLat = parseFloat(data[0].lat);
+                            deliveryLon = parseFloat(data[0].lon);
+                            updateDynamicETA();
+                        }
+                    })
+                    .catch(err => console.error('Lỗi định vị địa chỉ lưu sẵn:', err));
             }
         });
     </script>
