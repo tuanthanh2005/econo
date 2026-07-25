@@ -2176,11 +2176,11 @@
             <div>
                 <span class="suggested-title">Khu vực nhận hàng gợi ý (TP.HCM)</span>
                 <div class="suggested-chips">
-                    <button class="chip" onclick="setTempAddress('Quận 5, TP.HCM')">Quận 5 (Hub trung tâm)</button>
-                    <button class="chip" onclick="setTempAddress('Quận 1, TP.HCM')">Quận 1 (Hỏa tốc)</button>
-                    <button class="chip" onclick="setTempAddress('Quận 7, TP.HCM')">Quận 7 (Giao nhanh)</button>
-                    <button class="chip" onclick="setTempAddress('TP. Thủ Đức, TP.HCM')">Thủ Đức (Trong ngày)</button>
-                    <button class="chip" onclick="setTempAddress('Quận Bình Tân, TP.HCM')">Bình Tân (Dưới 25km)</button>
+                    <button class="chip" onclick="setTempAddress('Quận 5, TP.HCM', 10.7541, 106.6625)">Quận 5 (Hub trung tâm)</button>
+                    <button class="chip" onclick="setTempAddress('Quận 1, TP.HCM', 10.7783, 106.6967)">Quận 1 (Hỏa tốc)</button>
+                    <button class="chip" onclick="setTempAddress('Quận 7, TP.HCM', 10.7324, 106.7269)">Quận 7 (Giao nhanh)</button>
+                    <button class="chip" onclick="setTempAddress('TP. Thủ Đức, TP.HCM', 10.8494, 106.7537)">Thủ Đức (Trong ngày)</button>
+                    <button class="chip" onclick="setTempAddress('Quận Bình Tân, TP.HCM', 10.7628, 106.5982)">Bình Tân (Dưới 25km)</button>
                 </div>
             </div>
 
@@ -2289,6 +2289,16 @@
         const isUserLoggedIn = @json(auth()->check());
         let deliveryAddress = @json(auth()->user()->address ?? 'Quận 5, TP. Hồ Chí Minh');
         let lastSyncedAddress = deliveryAddress;
+        
+        // Coordinates for precise distance calculation (default to Q5 center)
+        let deliveryLat = 10.7541;
+        let deliveryLon = 106.6625;
+        let tempLat = 10.7541;
+        let tempLon = 106.6625;
+
+        const WAREHOUSE_LAT = 10.7541; // Hub Quận 5
+        const WAREHOUSE_LON = 106.6625;
+
         let cart = [];
 
         // Format Currency
@@ -2326,7 +2336,7 @@
                             }
 
                             container.innerHTML = data.map(item => `
-                                <li class="osm-suggestion-item" data-address="${item.display_name}">
+                                <li class="osm-suggestion-item" data-address="${item.display_name}" data-lat="${item.lat}" data-lon="${item.lon}">
                                     <i class="fa-solid fa-map-pin text-muted" style="font-size: 11px; margin-right: 8px;"></i>
                                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 500;">${item.display_name}</span>
                                 </li>
@@ -2338,10 +2348,12 @@
                             items.forEach(el => {
                                 el.addEventListener('click', () => {
                                     const selectedAddress = el.getAttribute('data-address');
+                                    const lat = parseFloat(el.getAttribute('data-lat'));
+                                    const lon = parseFloat(el.getAttribute('data-lon'));
                                     input.value = selectedAddress;
                                     container.classList.remove('show');
                                     if (onSelectCallback) {
-                                        onSelectCallback(selectedAddress);
+                                        onSelectCallback(selectedAddress, lat, lon);
                                     }
                                 });
                             });
@@ -2371,6 +2383,19 @@
             window.location.href = '/';
         }
 
+        // Calculate distance in km between two lat/lng coordinates (Haversine formula)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the earth in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in km
+        }
+
         // Add to Cart
         function addToCart(productId) {
             let product = products.find(p => p.id === productId);
@@ -2380,26 +2405,28 @@
             if (product) {
                 const addrLower = deliveryAddress.toLowerCase();
                 
+                // Calculate distance from user to warehouse (Q5)
+                const distance = calculateDistance(deliveryLat, deliveryLon, WAREHOUSE_LAT, WAREHOUSE_LON);
+                console.log(`ℹ️ Khoảng cách từ khách tới kho Quận 5: ${distance.toFixed(2)} km`);
+
                 // 1. Check if inside TP.HCM (25km limit)
                 const isInsideHCMC = addrLower.includes('hồ chí minh') || addrLower.includes('ho chi minh') || addrLower.includes('tphcm') || addrLower.includes('tp.hcm') || addrLower.includes('hcm') || addrLower.includes('quận') || addrLower.includes('q.');
                 const isOtherCity = addrLower.includes('hà nội') || addrLower.includes('đà nẵng') || addrLower.includes('ha noi') || addrLower.includes('da nang');
                 
-                if (isOtherCity || !isInsideHCMC) {
-                    alert(`⚠️ Giao Cấp Tốc hiện chỉ phục vụ giao hàng hỏa tốc trong phạm vi TP. Hồ Chí Minh (bán kính dưới 25km từ kho hàng Quận 5).\n\nĐịa chỉ hiện tại của bạn là '${deliveryAddress}'. Vui lòng cập nhật địa chỉ nhận hàng tại TP.HCM.`);
+                if (isOtherCity || !isInsideHCMC || distance > 25) {
+                    alert(`⚠️ Giao Cấp Tốc hiện chỉ phục vụ giao hàng hỏa tốc trong phạm vi TP. Hồ Chí Minh (bán kính dưới 25km từ kho hàng Quận 5).\n\nKhoảng cách hiện tại của bạn là ${distance.toFixed(1)}km. Vui lòng cập nhật địa chỉ nhận hàng tại TP.HCM.`);
                     openLocationModal();
                     return;
                 }
 
-                // 2. Check delivery restriction for food and drinks
+                // 2. Check delivery restriction for food and drinks (under 6km)
                 if (product.category_id === 3 || product.category_id === 4) { // Drinks/Food IDs
-                    const allowedLocalDistricts = ['Quận 1', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 8', 'Quận 10', 'Quận 11', 'Q.1', 'Q.3', 'Q.4', 'Q.5', 'Q.6', 'Q.8', 'Q.10', 'Q.11', 'Q1', 'Q3', 'Q4', 'Q5', 'Q6', 'Q8', 'Q10', 'Q11', 'Bình Thạnh', 'Phú Nhuận'];
-                    const isAllowedLocal = allowedLocalDistricts.some(d => addrLower.includes(d.toLowerCase()));
-                    if (!isAllowedLocal) {
-                        const changeAddress = confirm(`⚠️ Mặt hàng ẩm thực này chỉ hỗ trợ giao hỏa tốc tại các quận trung tâm lân cận Q.5 (Q.1, 3, 4, 5, 6, 8, 10, 11, Phú Nhuận, Bình Thạnh) để bảo đảm chất lượng tươi ngon nóng hổi.\n\nBạn có muốn đổi địa chỉ giao hàng gần hơn không?`);
+                    if (distance > 6) {
+                        const changeAddress = confirm(`⚠️ Mặt hàng ẩm thực này chỉ hỗ trợ giao hỏa tốc trong bán kính 6km từ kho Quận 5 (bạn đang ở cách ${distance.toFixed(1)}km) để bảo đảm chất lượng tươi ngon nóng hổi.\n\nBạn có muốn đổi địa chỉ giao hàng gần hơn không?`);
                         if (changeAddress) {
                             openLocationModal();
-                            return;
                         }
+                        return;
                     }
                 }
 
@@ -2482,14 +2509,20 @@
             document.getElementById('location-modal').classList.remove('open');
         }
 
-        function setTempAddress(addr) {
+        function setTempAddress(addr, lat, lon) {
             document.getElementById('temp-address-input').value = addr;
+            if (lat && lon) {
+                tempLat = lat;
+                tempLon = lon;
+            }
         }
 
         function saveLocation() {
             const addr = document.getElementById('temp-address-input').value;
             if (addr.trim() !== '') {
                 deliveryAddress = addr;
+                deliveryLat = tempLat;
+                deliveryLon = tempLon;
                 document.getElementById('delivery-address-lbl').textContent = addr;
                 document.getElementById('checkout-address-input').value = addr;
                 
@@ -2569,12 +2602,16 @@
                                 if (data && data.display_name) {
                                     const address = data.display_name;
                                     deliveryAddress = address;
+                                    deliveryLat = lat;
+                                    deliveryLon = lon;
+                                    tempLat = lat;
+                                    tempLon = lon;
                                     document.getElementById('delivery-address-lbl').textContent = address;
                                     const checkoutInput = document.getElementById('checkout-address-input');
                                     if (checkoutInput) {
                                         checkoutInput.value = address;
                                     }
-                                    console.log('📍 Tự động bắt vị trí thành công:', address);
+                                    console.log('📍 Tự động bắt vị trí thành công:', address, lat, lon);
                                 }
                             })
                             .catch(err => console.error('Lỗi lấy vị trí OSM:', err));
@@ -2610,8 +2647,10 @@
                         .then(data => {
                             if (data && data.display_name) {
                                 const address = data.display_name;
+                                tempLat = lat;
+                                tempLon = lon;
                                 document.getElementById('temp-address-input').value = address;
-                                console.log('📍 Định vị thủ công thành công:', address);
+                                console.log('📍 Định vị thủ công thành công:', address, lat, lon);
                             }
                             btn.innerHTML = originalHtml;
                             btn.disabled = false;
@@ -2668,9 +2707,14 @@
             startFlashSaleTimer();
             
             // Initialize OSM Autocomplete
-            setupOSMAutocomplete('temp-address-input');
-            setupOSMAutocomplete('checkout-address-input', (selectedAddr) => {
+            setupOSMAutocomplete('temp-address-input', (selectedAddr, lat, lon) => {
+                tempLat = lat;
+                tempLon = lon;
+            });
+            setupOSMAutocomplete('checkout-address-input', (selectedAddr, lat, lon) => {
                 deliveryAddress = selectedAddr;
+                deliveryLat = lat;
+                deliveryLon = lon;
                 document.getElementById('delivery-address-lbl').textContent = selectedAddr;
                 if (isUserLoggedIn) {
                     syncAddressToDatabase(selectedAddr);
