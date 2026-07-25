@@ -14,6 +14,9 @@ Route::get('/danh-muc/{slug}', [HomeController::class, 'category'])->name('categ
 Route::get('/san-pham/{slug}', [HomeController::class, 'productDetails'])->name('product.show');
 Route::get('/gio-hang', [HomeController::class, 'showCart'])->name('cart.show');
 Route::post('/dat-hang', [HomeController::class, 'checkout'])->name('checkout.store');
+Route::get('/don-hang/{id}/thanh-toan', [HomeController::class, 'showPayment'])->name('order.payment');
+Route::post('/don-hang/{id}/xac-nhan-thanh-toan', [HomeController::class, 'confirmPayment'])->name('order.confirm_payment');
+Route::get('/don-hang/{id}/theo-doi', [HomeController::class, 'trackOrder'])->name('order.track');
 
 // ================= AUTHENTICATION =================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

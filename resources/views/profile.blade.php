@@ -381,16 +381,18 @@
                                         <span class="order-date ms-2">({{ $order->created_at->format('H:i d/m/Y') }})</span>
                                     </div>
                                     <div>
-                                        @if($order->status === 'pending')
+                                        @if($order->status === 'pending_payment')
+                                            <span class="badge bg-danger text-light">Chờ cọc 50%</span>
+                                        @elseif($order->status === 'pending')
                                             <span class="badge bg-warning text-dark">Chờ xử lý</span>
                                         @elseif($order->status === 'processing')
-                                            <span class="badge bg-info">Đang xử lý</span>
+                                            <span class="badge bg-info">Đang cọc & Đóng gói</span>
                                         @elseif($order->status === 'shipped')
-                                            <span class="badge bg-primary">Đang giao</span>
+                                            <span class="badge bg-primary">Đang giao hỏa tốc</span>
                                         @elseif($order->status === 'completed')
                                             <span class="badge bg-success">Hoàn thành</span>
                                         @else
-                                            <span class="badge bg-danger">Đã hủy</span>
+                                            <span class="badge bg-secondary">Đã hủy</span>
                                         @endif
                                     </div>
                                 </div>
@@ -411,11 +413,22 @@
                                     @endforeach
                                 </div>
 
-                                <div class="order-footer">
+                                <div class="order-footer d-flex justify-content-between align-items-center">
                                     <div class="text-muted small">
                                         <i class="fa-solid fa-truck me-1"></i> Giao tới: {{ Str::limit($order->customer_address, 45) }}
                                     </div>
-                                    <span class="order-total">Tổng tiền: {{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                    <div class="text-end">
+                                        <span class="order-total mb-2 d-block">Tổng tiền: {{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                        @if ($order->status === 'pending_payment')
+                                            <a href="{{ route('order.payment', ['id' => $order->id]) }}" class="btn btn-sm btn-danger fw-bold rounded-3 px-3">
+                                                <i class="fa-solid fa-credit-card me-1"></i> Thanh toán cọc 50%
+                                            </a>
+                                        @else
+                                            <a href="{{ route('order.track', ['id' => $order->id]) }}" class="btn btn-sm btn-outline-primary fw-bold rounded-3 px-3">
+                                                <i class="fa-solid fa-map-location-dot me-1"></i> Theo dõi hành trình
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @empty

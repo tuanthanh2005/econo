@@ -91,7 +91,7 @@ class HomeController extends Controller
                 'customer_phone' => $request->customer_phone,
                 'customer_address' => $request->customer_address,
                 'total_price' => 0, // updated after item sum
-                'status' => 'pending',
+                'status' => 'pending_payment',
                 'delivery_eta' => '1 - 3 giờ',
                 'notes' => $request->notes
             ]);
@@ -123,7 +123,7 @@ class HomeController extends Controller
             $order->update(['total_price' => $totalPrice]);
 
             DB::commit();
-            return view('checkout_success', compact('order'));
+            return redirect()->route('order.payment', ['id' => $order->id]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -205,5 +205,28 @@ class HomeController extends Controller
         $categories = \App\Models\Category::all();
         $flashProducts = \App\Models\Product::where('is_flashsale', true)->where('is_active', true)->get();
         return view('cart', compact('categories', 'flashProducts'));
+    }
+
+    public function showPayment($id)
+    {
+        $order = Order::findOrFail($id);
+        $categories = \App\Models\Category::all();
+        $flashProducts = \App\Models\Product::where('is_flashsale', true)->where('is_active', true)->get();
+        return view('order_payment', compact('order', 'categories', 'flashProducts'));
+    }
+
+    public function confirmPayment($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update(['status' => 'processing']);
+        return redirect()->route('order.track', ['id' => $order->id]);
+    }
+
+    public function trackOrder($id)
+    {
+        $order = Order::with('items.product')->findOrFail($id);
+        $categories = \App\Models\Category::all();
+        $flashProducts = \App\Models\Product::where('is_flashsale', true)->where('is_active', true)->get();
+        return view('order_track', compact('order', 'categories', 'flashProducts'));
     }
 }
