@@ -312,32 +312,39 @@
                 </div>
             </div>
 
-            <div class="bank-details-box">
-                <h3 class="bank-details-title"><i class="fa-solid fa-university"></i> Thông tin chuyển khoản</h3>
-                
-                <div class="bank-row">
-                    <span class="bank-label">Ngân hàng:</span>
-                    <span class="bank-value">OCB (Ngân hàng TMCP Phương Đông)</span>
+            <div class="bank-details-box" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; background: white; border: 2px solid var(--primary-light); border-radius: 20px; padding: 24px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
+                <div style="flex: 1; min-width: 280px;">
+                    <h3 class="bank-details-title" style="font-size: 14px; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-university"></i> Thông tin chuyển khoản</h3>
+                    
+                    <div class="bank-row">
+                        <span class="bank-label">Ngân hàng:</span>
+                        <span class="bank-value">OCB (Ngân hàng TMCP Phương Đông)</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-label">Số tài khoản:</span>
+                        <span class="bank-value copyable" onclick="copyText('0772698113')">
+                            0772698113 <i class="fa-regular fa-copy"></i>
+                        </span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-label">Chủ tài khoản:</span>
+                        <span class="bank-value">TRAN THANH TUAN</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-label">Số tiền cọc (50%):</span>
+                        <span class="bank-value" style="color: var(--secondary);">{{ number_format($order->total_price * 0.5, 0, ',', '.') }}đ</span>
+                    </div>
+                    <div class="bank-row">
+                        <span class="bank-label">Nội dung chuyển khoản:</span>
+                        <span class="bank-value copyable" onclick="copyText('GCT {{ $order->id }}')">
+                            GCT {{ $order->id }} <i class="fa-regular fa-copy"></i>
+                        </span>
+                    </div>
                 </div>
-                <div class="bank-row">
-                    <span class="bank-label">Số tài khoản:</span>
-                    <span class="bank-value copyable" onclick="copyText('0772698113')">
-                        0772698113 <i class="fa-regular fa-copy"></i>
-                    </span>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Chủ tài khoản:</span>
-                    <span class="bank-value">TRAN THANH TUAN</span>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Số tiền:</span>
-                    <span class="bank-value" style="color: var(--secondary);">{{ number_format($order->total_price * 0.5, 0, ',', '.') }}đ</span>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Nội dung chuyển khoản:</span>
-                    <span class="bank-value copyable" onclick="copyText('GCT {{ $order->id }}')">
-                        GCT {{ $order->id }} <i class="fa-regular fa-copy"></i>
-                    </span>
+
+                <!-- VietQR dynamic Code area -->
+                <div style="flex-shrink: 0; width: 180px; height: 180px; border: 1.5px solid var(--border-color); border-radius: 16px; overflow: hidden; background: white; padding: 6px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: var(--shadow-sm);">
+                    <img src="https://img.vietqr.io/image/OCB-0772698113-compact.png?amount={{ $order->total_price * 0.5 }}&addInfo=GCT%20{{ $order->id }}&accountName=TRAN%20THANH%20TUAN" alt="Mã VietQR cọc 50%" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
             </div>
 
