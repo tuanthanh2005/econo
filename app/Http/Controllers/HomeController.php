@@ -181,4 +181,20 @@ class HomeController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Địa chỉ đã được đồng bộ vào hệ thống.']);
     }
+
+    public function productDetails($slug)
+    {
+        $product = \App\Models\Product::with('category')->where('slug', $slug)->firstOrFail();
+        
+        $relatedProducts = \App\Models\Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('is_active', true)
+            ->limit(4)
+            ->get();
+            
+        $categories = \App\Models\Category::all();
+        $flashProducts = \App\Models\Product::where('is_flashsale', true)->where('is_active', true)->get();
+
+        return view('product_details', compact('product', 'relatedProducts', 'categories', 'flashProducts'));
+    }
 }

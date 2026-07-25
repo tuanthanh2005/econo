@@ -2482,56 +2482,15 @@
             }
         }
 
-        // Product Detail Modal controls
+        // Redirect to dedicated Product details page
         function openProductDetailModal(productId) {
             let product = products.find(p => p.id === productId);
             if (!product) {
                 product = flashProducts.find(p => p.id === productId);
             }
-            if (!product) return;
-
-            document.getElementById('detail-product-title').textContent = product.name;
-            document.getElementById('detail-product-brand').textContent = product.brand || 'GIAO CẤP TỐC';
-            document.getElementById('detail-product-description').textContent = product.description || 'Sản phẩm giao hỏa tốc chất lượng cao từ hệ thống Giao Cấp Tốc.';
-            
-            // ETA display
-            const distance = calculateDistance(deliveryLat, deliveryLon, WAREHOUSE_LAT, WAREHOUSE_LON);
-            let etaMinutes = Math.round(20 + distance * 1.7);
-            if (etaMinutes < 25) etaMinutes = 25;
-            document.getElementById('detail-product-eta').textContent = `⚡ Giao dự kiến: ${etaMinutes} phút`;
-
-            const img = document.getElementById('detail-product-image');
-            if (product.image_path) {
-                img.src = product.image_path;
-                img.style.display = 'block';
-                document.getElementById('detail-product-image-container').style.display = 'flex';
-            } else {
-                img.style.display = 'none';
-                document.getElementById('detail-product-image-container').style.display = 'none';
+            if (product) {
+                window.location.href = `/san-pham/${product.slug}`;
             }
-
-            // Prices
-            document.getElementById('detail-product-price').textContent = formatPrice(product.price);
-            const oldPriceEl = document.getElementById('detail-product-old-price');
-            if (product.old_price && product.old_price > product.price) {
-                oldPriceEl.textContent = formatPrice(product.old_price);
-                oldPriceEl.style.display = 'inline';
-            } else {
-                oldPriceEl.style.display = 'none';
-            }
-
-            // Add to cart button action
-            const addBtn = document.getElementById('detail-add-to-cart-btn');
-            addBtn.onclick = () => {
-                addToCart(product.id);
-                closeProductDetailModal();
-            };
-
-            document.getElementById('product-detail-modal').classList.add('open');
-        }
-
-        function closeProductDetailModal() {
-            document.getElementById('product-detail-modal').classList.remove('open');
         }
 
         // Add to Cart
