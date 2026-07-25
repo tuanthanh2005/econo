@@ -965,9 +965,42 @@
         .shield-card h3 { font-size: 16px; font-weight: 800; }
         .shield-card p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
 
-        /* Force Google Places Autocomplete dropdown to appear above modal */
-        .pac-container {
-            z-index: 9999 !important;
+        /* Free OpenStreetMap Autocomplete Dropdown styling */
+        .osm-suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 9999;
+            max-height: 220px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 6px;
+            padding: 6px 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        .osm-suggestions-list.show {
+            display: block;
+        }
+
+        .osm-suggestion-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        .osm-suggestion-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
         }
 
         /* LOCATION MODAL */
@@ -2220,57 +2253,70 @@
         let cart = [];
 
         // Format Currency
-        const GOOGLE_MAPS_API_KEY = 'AIzaSyDE-4tOfV3NT2DRxnOjUaaUe9hn9oCQMfM';
+        // Free OpenStreetMap Autocomplete setup
+        function setupOSMAutocomplete(inputId, onSelectCallback) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
 
-        function initGoogleAutocomplete() {
-            if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') {
-                console.log('⚠️ Google Maps API Key chưa cấu hình. Dùng chế độ nhập tay địa chỉ.');
-                return;
-            }
+            // Make sure parent is relative for dropdown alignment
+            input.parentNode.style.position = 'relative';
 
-            const inputModal = document.getElementById('temp-address-input');
-            const inputCheckout = document.getElementById('checkout-address-input');
+            // Create suggestions container
+            const container = document.createElement('ul');
+            container.className = 'osm-suggestions-list';
+            input.parentNode.appendChild(container);
 
-            const options = {
-                componentRestrictions: { country: 'vn' },
-                fields: ['formatted_address', 'geometry'],
-                types: ['address']
-            };
+            let debounceTimer;
 
-            if (inputModal) {
-                const autocompleteModal = new google.maps.places.Autocomplete(inputModal, options);
-                autocompleteModal.addListener('place_changed', function() {
-                    const place = autocompleteModal.getPlace();
-                    if (place.formatted_address) {
-                        inputModal.value = place.formatted_address;
-                    }
-                });
-            }
+            input.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                const query = input.value.trim();
+                
+                if (query.length < 3) {
+                    container.classList.remove('show');
+                    return;
+                }
 
-            if (inputCheckout) {
-                const autocompleteCheckout = new google.maps.places.Autocomplete(inputCheckout, options);
-                autocompleteCheckout.addListener('place_changed', function() {
-                    const place = autocompleteCheckout.getPlace();
-                    if (place.formatted_address) {
-                        inputCheckout.value = place.formatted_address;
-                        deliveryAddress = place.formatted_address;
-                        document.getElementById('delivery-address-lbl').textContent = place.formatted_address;
-                    }
-                });
-            }
-        }
+                debounceTimer = setTimeout(() => {
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${encodeURIComponent(query)}&countrycodes=vn`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length === 0) {
+                                container.classList.remove('show');
+                                return;
+                            }
 
-        function loadGoogleMapsScript() {
-            if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') return;
-            if (window.google && window.google.maps) {
-                initGoogleAutocomplete();
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGoogleAutocomplete`;
-            script.async = true;
-            script.defer = true;
-            document.head.appendChild(script);
+                            container.innerHTML = data.map(item => `
+                                <li class="osm-suggestion-item" data-address="${item.display_name}">
+                                    <i class="fa-solid fa-map-pin text-muted" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 500;">${item.display_name}</span>
+                                </li>
+                            `).join('');
+                            container.classList.add('show');
+
+                            // Click item
+                            const items = container.querySelectorAll('.osm-suggestion-item');
+                            items.forEach(el => {
+                                el.addEventListener('click', () => {
+                                    const selectedAddress = el.getAttribute('data-address');
+                                    input.value = selectedAddress;
+                                    container.classList.remove('show');
+                                    if (onSelectCallback) {
+                                        onSelectCallback(selectedAddress);
+                                    }
+                                });
+                            });
+                        })
+                        .catch(err => console.error('OSM Fetch Error:', err));
+                }, 400);
+            });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (e.target !== input && e.target !== container) {
+                    container.classList.remove('show');
+                }
+            });
         }
 
         function formatPrice(val) {
@@ -2471,7 +2517,13 @@
             document.getElementById('checkout-address-input').value = deliveryAddress;
             updateCartUI();
             startFlashSaleTimer();
-            loadGoogleMapsScript();
+            
+            // Initialize OSM Autocomplete
+            setupOSMAutocomplete('temp-address-input');
+            setupOSMAutocomplete('checkout-address-input', (selectedAddr) => {
+                deliveryAddress = selectedAddr;
+                document.getElementById('delivery-address-lbl').textContent = selectedAddr;
+            });
         });
     </script>
     <!-- FLOATING CHAT BUBBLES -->
