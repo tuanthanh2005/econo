@@ -1699,6 +1699,13 @@
             text-decoration: none;
         }
 
+        .user-dropdown-menu a i {
+            margin-right: 12px;
+            width: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+
         .user-dropdown-menu a:hover {
             background: #f8fafc;
             color: var(--primary);
