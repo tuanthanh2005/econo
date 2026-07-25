@@ -1823,10 +1823,10 @@
 
                 <!-- Cart & Account Actions -->
                 <div class="header-actions">
-                    <button class="cart-btn" onclick="toggleCart()">
+                    <a href="/gio-hang" class="cart-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; position: relative;">
                         <i class="bi bi-bag-dash-fill"></i>
                         <span class="cart-badge" id="cart-badge-count">0</span>
-                    </button>
+                    </a>
                     
                     @auth
                         @if (Auth::user()->role === 'superadmin')
@@ -2356,6 +2356,18 @@
 
         let cart = [];
 
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('giaocaptoc_cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            updateCartUI();
+        }
+
+        function saveCartToStorage() {
+            localStorage.setItem('giaocaptoc_cart', JSON.stringify(cart));
+        }
+
         // Format Currency
         // Free OpenStreetMap Autocomplete setup
         function setupOSMAutocomplete(inputId, onSelectCallback) {
@@ -2531,16 +2543,15 @@
                     uniqueId: Date.now() + Math.random(),
                     ...product
                 });
-                updateCartUI();
-                
-                // Show notification toast or open sidebar
-                toggleCart();
+                saveCartToStorage();
+                window.location.href = '/gio-hang';
             }
         }
 
         // Remove from Cart
         function removeFromCart(uniqueId) {
             cart = cart.filter(item => item.uniqueId !== uniqueId);
+            saveCartToStorage();
             updateCartUI();
         }
 
@@ -2816,9 +2827,11 @@
 
         // Init render
         window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('checkout-address-input').value = deliveryAddress;
+            if (document.getElementById('checkout-address-input')) {
+                document.getElementById('checkout-address-input').value = deliveryAddress;
+            }
             document.getElementById('delivery-address-lbl').textContent = deliveryAddress;
-            updateCartUI();
+            loadCartFromStorage();
             startFlashSaleTimer();
             
             // Initialize OSM Autocomplete

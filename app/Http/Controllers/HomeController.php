@@ -197,4 +197,11 @@ class HomeController extends Controller
 
         return view('product_details', compact('product', 'relatedProducts', 'categories', 'flashProducts'));
     }
+
+    public function showCart()
+    {
+        $categories = \App\Models\Category::all();
+        $flashProducts = \App\Models\Product::where('is_flashsale', true)->where('is_active', true)->get();
+        return view('cart', compact('categories', 'flashProducts'));
+    }
 }

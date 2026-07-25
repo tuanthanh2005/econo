@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/danh-muc/{slug}', [HomeController::class, 'category'])->name('category.show');
 Route::get('/san-pham/{slug}', [HomeController::class, 'productDetails'])->name('product.show');
+Route::get('/gio-hang', [HomeController::class, 'showCart'])->name('cart.show');
 Route::post('/dat-hang', [HomeController::class, 'checkout'])->name('checkout.store');
 
 // ================= AUTHENTICATION =================

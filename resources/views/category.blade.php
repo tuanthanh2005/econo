@@ -502,10 +502,10 @@
                 </a>
 
                 <div class="header-actions">
-                    <button class="cart-btn" onclick="toggleCart()">
+                    <a href="/gio-hang" class="cart-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; position: relative;">
                         <i class="bi bi-bag-dash-fill"></i>
                         <span class="cart-badge" id="cart-badge-count">0</span>
-                    </button>
+                    </a>
                     <a href="/" class="login-btn" style="text-decoration: none; background: #334155;">Về Trang Chủ</a>
                 </div>
             </div>
@@ -573,7 +573,7 @@
                             <div class="p-eta-badge">
                                 <span>⚡</span> {{ $product->eta }}
                             </div>
-                            <div class="p-img-area">
+                            <div class="p-img-area" onclick="window.location.href='/san-pham/{{ $product->slug }}'" style="cursor: pointer;">
                                 @if ($product->image_path)
                                     <img src="{{ $product->image_path }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 @else
@@ -583,7 +583,7 @@
                             <div class="p-info">
                                 <div>
                                     <span class="p-brand">{{ $product->brand }}</span>
-                                    <h3 class="p-name">{{ $product->name }}</h3>
+                                    <h3 class="p-name" onclick="window.location.href='/san-pham/{{ $product->slug }}'" style="cursor: pointer;">{{ $product->name }}</h3>
                                     @if ($category->slug === 'food' || $category->slug === 'drinks')
                                         <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
                                             <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
@@ -660,9 +660,25 @@
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
         }
 
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('giaocaptoc_cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            updateCartUI();
+        }
+
+        function saveCartToStorage() {
+            localStorage.setItem('giaocaptoc_cart', JSON.stringify(cart));
+        }
+
         function addToCart(productId) {
             let product = products.find(p => p.id === productId);
             if (product) {
+                const savedAddr = localStorage.getItem('deliveryAddress');
+                if (savedAddr) {
+                    deliveryAddress = savedAddr;
+                }
                 const addrLower = deliveryAddress.toLowerCase();
                 const isInsideHCMC = addrLower.includes('hồ chí minh') || addrLower.includes('tphcm') || addrLower.includes('tp.hcm') || addrLower.includes('hcm') || addrLower.includes('quận') || addrLower.includes('q.');
                 
@@ -685,13 +701,14 @@
                     uniqueId: Date.now() + Math.random(),
                     ...product
                 });
-                updateCartUI();
-                toggleCart();
+                saveCartToStorage();
+                window.location.href = '/gio-hang';
             }
         }
 
         function removeFromCart(uniqueId) {
             cart = cart.filter(item => item.uniqueId !== uniqueId);
+            saveCartToStorage();
             updateCartUI();
         }
 
@@ -702,10 +719,12 @@
             const totalLbl = document.getElementById('cart-total-lbl');
             const checkoutItemsJson = document.getElementById('checkout-items-json');
             
+            if (!container || !totalLbl) return;
+
             if (cart.length === 0) {
                 container.innerHTML = `<div class="cart-empty-txt">Giỏ hàng trống</div>`;
                 totalLbl.textContent = '0 đ';
-                checkoutItemsJson.value = '[]';
+                if (checkoutItemsJson) checkoutItemsJson.value = '[]';
                 return;
             }
 
@@ -726,19 +745,18 @@
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             totalLbl.textContent = formatPrice(total);
-            checkoutItemsJson.value = JSON.stringify(cart);
-        }
-
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            const overlay = document.getElementById('cart-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('open');
+            if (checkoutItemsJson) checkoutItemsJson.value = JSON.stringify(cart);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('checkout-address-input').value = deliveryAddress;
-            updateCartUI();
+            loadCartFromStorage();
+            const authUserAddress = @json(auth()->user()->address ?? '');
+            if (authUserAddress) {
+                deliveryAddress = authUserAddress;
+            }
+            if (document.getElementById('checkout-address-input')) {
+                document.getElementById('checkout-address-input').value = deliveryAddress;
+            }
         });
     </script>
 
