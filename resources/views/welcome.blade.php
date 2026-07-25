@@ -2381,7 +2381,7 @@
                 const addrLower = deliveryAddress.toLowerCase();
                 
                 // 1. Check if inside TP.HCM (25km limit)
-                const isInsideHCMC = addrLower.includes('hồ chí minh') || addrLower.includes('tphcm') || addrLower.includes('tp.hcm') || addrLower.includes('hcm') || addrLower.includes('quận') || addrLower.includes('q.');
+                const isInsideHCMC = addrLower.includes('hồ chí minh') || addrLower.includes('ho chi minh') || addrLower.includes('tphcm') || addrLower.includes('tp.hcm') || addrLower.includes('hcm') || addrLower.includes('quận') || addrLower.includes('q.');
                 const isOtherCity = addrLower.includes('hà nội') || addrLower.includes('đà nẵng') || addrLower.includes('ha noi') || addrLower.includes('da nang');
                 
                 if (isOtherCity || !isInsideHCMC) {
