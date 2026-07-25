@@ -2215,6 +2215,59 @@
         let cart = [];
 
         // Format Currency
+        const GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+
+        function initGoogleAutocomplete() {
+            if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') {
+                console.log('⚠️ Google Maps API Key chưa cấu hình. Dùng chế độ nhập tay địa chỉ.');
+                return;
+            }
+
+            const inputModal = document.getElementById('temp-address-input');
+            const inputCheckout = document.getElementById('checkout-address-input');
+
+            const options = {
+                componentRestrictions: { country: 'vn' },
+                fields: ['formatted_address', 'geometry'],
+                types: ['address']
+            };
+
+            if (inputModal) {
+                const autocompleteModal = new google.maps.places.Autocomplete(inputModal, options);
+                autocompleteModal.addListener('place_changed', function() {
+                    const place = autocompleteModal.getPlace();
+                    if (place.formatted_address) {
+                        inputModal.value = place.formatted_address;
+                    }
+                });
+            }
+
+            if (inputCheckout) {
+                const autocompleteCheckout = new google.maps.places.Autocomplete(inputCheckout, options);
+                autocompleteCheckout.addListener('place_changed', function() {
+                    const place = autocompleteCheckout.getPlace();
+                    if (place.formatted_address) {
+                        inputCheckout.value = place.formatted_address;
+                        deliveryAddress = place.formatted_address;
+                        document.getElementById('delivery-address-lbl').textContent = place.formatted_address;
+                    }
+                });
+            }
+        }
+
+        function loadGoogleMapsScript() {
+            if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') return;
+            if (window.google && window.google.maps) {
+                initGoogleAutocomplete();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGoogleAutocomplete`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+
         function formatPrice(val) {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
         }
@@ -2413,6 +2466,7 @@
             document.getElementById('checkout-address-input').value = deliveryAddress;
             updateCartUI();
             startFlashSaleTimer();
+            loadGoogleMapsScript();
         });
     </script>
     <!-- FLOATING CHAT BUBBLES -->
