@@ -662,232 +662,6 @@
         .cat-card:nth-child(4) .cat-eta-badge { background: #e8f5e9; color: #2e7d32; }
         .cat-card:nth-child(5) .cat-eta-badge { background: #f3e5f5; color: #7b1fa2; }
 
-
-        /* CATEGORY VIEW SPECIFIC LAYOUT */
-        .breadcrumbs {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .breadcrumbs span.sep {
-            color: #cbd5e1;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--primary);
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 20px;
-        }
-
-        .back-link:hover {
-            transform: translateX(-4px);
-        }
-
-        .category-banner {
-            border-radius: 20px;
-            padding: 24px 30px;
-            color: white;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .category-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.15), transparent);
-        }
-
-        .banner-info {
-            position: relative;
-            z-index: 5;
-        }
-
-        .banner-info h2 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-
-        .banner-info p {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .banner-icon {
-            font-size: 64px;
-            opacity: 0.15;
-            position: absolute;
-            right: 24px;
-            bottom: -8px;
-        }
-
-        .banner-flowers { background: linear-gradient(135deg, #ec4899, #f43f5e); }
-        .banner-accessories { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .banner-drinks { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .banner-food { background: linear-gradient(135deg, #10b981, #047857); }
-        .banner-others { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-
-        .category-layout {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 24px;
-        }
-
-        .category-sidebar {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            align-self: start;
-        }
-
-        .sidebar-title {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .sidebar-menu-item {
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            transition: var(--transition);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-menu-item:hover, .sidebar-menu-item.active {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .sidebar-menu-item span.count {
-            background: white;
-            padding: 1px 6px;
-            border-radius: 12px;
-            font-size: 9px;
-            font-weight: 800;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-        }
-
-        .sidebar-menu-item.active span.count {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .category-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .category-results-txt {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .sort-dropdown {
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .sort-dropdown:focus {
-            border-color: var(--primary);
-        }
-
-
-        /* PRODUCTS SECTION */
-        .products-section {
-            padding: 40px 0 60px;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .products-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-        }
-
-        .p-header-left {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .p-header-top {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .p-header-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--primary);
-        }
-
-        .p-header-sub {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .p-header-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-top: 4px;
-        }
-
         /* Products Grid */
         .products-grid {
             display: grid;
@@ -1067,7 +841,6 @@
         .empty-title { font-weight: 700; color: var(--text-main); font-size: 15px; }
         .empty-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-
         /* HOW IT WORKS */
         .how-section {
             padding: 80px 0;
@@ -1133,7 +906,6 @@
             font-weight: 500;
         }
 
-
         /* COMMITMENT SECTION */
         .commitment-section {
             background: linear-gradient(135deg, #0f172a, #1e293b);
@@ -1192,7 +964,6 @@
         .shield-icon { font-size: 40px; display: block; margin-bottom: 8px; color: var(--accent); }
         .shield-card h3 { font-size: 16px; font-weight: 800; }
         .shield-card p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-
 
         /* LOCATION MODAL */
         .modal {
@@ -1327,7 +1098,6 @@
             color: white;
             box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2);
         }
-
 
         /* CART SIDEBAR */
         .cart-sidebar {
@@ -1469,6 +1239,30 @@
             gap: 8px;
         }
 
+        /* CHECKOUT FORM IN SIDEBAR */
+        .checkout-form-container {
+            border-top: 1.5px solid var(--border-color);
+            padding: 15px 0 0;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkout-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border-color);
+            font-size: 12px;
+            font-weight: 500;
+            outline: none;
+        }
+
+        .checkout-input:focus {
+            border-color: var(--primary);
+        }
+
         .cart-checkout-btn {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -1478,8 +1272,10 @@
             border-radius: 14px;
             font-size: 14px;
             box-shadow: 0 4px 12px rgba(255, 87, 34, 0.15);
+            border: none;
+            width: 100%;
+            cursor: pointer;
         }
-
 
         /* FOOTER */
         footer {
@@ -1582,9 +1378,6 @@
             .products-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
-            .category-layout {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1667,7 +1460,6 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
         }
 
-        /* Tooltip style */
         .chat-bubble::after {
             content: attr(data-tooltip);
             position: absolute;
@@ -1692,7 +1484,6 @@
             transform: translateY(-50%) scale(1);
         }
 
-        /* Pulse Ring Glow Animation */
         .chat-bubble::before {
             content: '';
             position: absolute;
@@ -1703,49 +1494,16 @@
             pointer-events: none;
         }
 
-        .bubble-zalo {
-            background: #0068ff;
-            color: #0068ff;
-        }
-
-        .bubble-zalo span {
-            color: white;
-        }
-
-        .bubble-zalo::before {
-            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
-        }
-
-        .bubble-messenger {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: #00c6ff;
-        }
-
-        .bubble-messenger i {
-            color: white;
-        }
-
-        .bubble-telegram {
-            background: #229ED9;
-            color: #229ED9;
-        }
-
-        .bubble-telegram i {
-            color: white;
-        }
-
-        .bubble-webchat {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--primary);
-        }
-
-        .bubble-webchat i {
-            color: white;
-        }
-
-        .bubble-webchat::before {
-            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite 0.5s;
-        }
+        .bubble-zalo { background: #0068ff; color: #0068ff; }
+        .bubble-zalo span { color: white; }
+        .bubble-zalo::before { animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite; }
+        .bubble-messenger { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #00c6ff; }
+        .bubble-messenger i { color: white; }
+        .bubble-telegram { background: #229ED9; color: #229ED9; }
+        .bubble-telegram i { color: white; }
+        .bubble-webchat { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--primary); }
+        .bubble-webchat i { color: white; }
+        .bubble-webchat::before { animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite 0.5s; }
 
         @keyframes float-bubbles {
             0% { transform: translateY(0); }
@@ -1794,14 +1552,8 @@
         }
 
         @keyframes pulse-flash-icon {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(216, 67, 21, 0.4);
-            }
-            50% {
-                transform: scale(1.08);
-                box-shadow: 0 0 0 8px rgba(216, 67, 21, 0);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 67, 21, 0.4); }
+            50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(216, 67, 21, 0); }
         }
 
         .flashsale-title-wrapper h2 {
@@ -1925,7 +1677,15 @@
                         <span class="cart-badge" id="cart-badge-count">0</span>
                     </button>
                     
-                    <button class="login-btn">Đăng nhập</button>
+                    @auth
+                        @if (Auth::user()->role === 'superadmin')
+                            <a href="/admin/dashboard" class="login-btn" style="text-decoration: none;"><i class="fa-solid fa-gauge me-1"></i> Admin</a>
+                        @else
+                            <a href="/logout" class="login-btn" style="text-decoration: none; background: #334155;"><i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Thoát</a>
+                        @endif
+                    @else
+                        <a href="/login" class="login-btn" style="text-decoration: none;">Đăng nhập</a>
+                    @endauth
                 </div>
 
             </div>
@@ -2038,40 +1798,13 @@
 
                     <!-- Category Horizontal Grid -->
                     <div class="cat-grid">
-                        <!-- Category Card 1: Flowers -->
-                        <div id="cat-flowers" class="cat-card" onclick="navigateToCategory('flowers')">
-                            <div class="cat-emoji"><i class="fa-solid fa-gift"></i></div>
-                            <span class="cat-title">Hoa Dịp Lễ</span>
-                            <span class="cat-eta-badge">⚡ Giao nhanh 1h</span>
-                        </div>
-
-                        <!-- Category Card 2: Phone Accessories -->
-                        <div id="cat-accessories" class="cat-card" onclick="navigateToCategory('accessories')">
-                            <div class="cat-emoji"><i class="fa-solid fa-headphones"></i></div>
-                            <span class="cat-title">Phụ Kiện Điện Thoại</span>
-                            <span class="cat-eta-badge">⚡ Giao nhanh 1.5h</span>
-                        </div>
-
-                        <!-- Category Card 3: Bubble tea -->
-                        <div id="cat-drinks" class="cat-card" onclick="navigateToCategory('drinks')">
-                            <div class="cat-emoji"><i class="fa-solid fa-mug-hot"></i></div>
-                            <span class="cat-title">Trà Sữa & Nước</span>
-                            <span class="cat-eta-badge">⚡ Giao nhanh 45m</span>
-                        </div>
-
-                        <!-- Category Card 4: Food -->
-                        <div id="cat-food" class="cat-card" onclick="navigateToCategory('food')">
-                            <div class="cat-emoji"><i class="fa-solid fa-burger"></i></div>
-                            <span class="cat-title">Đồ Ăn Vặt / Xế</span>
-                            <span class="cat-eta-badge">⚡ Giao nhanh 30m</span>
-                        </div>
-
-                        <!-- Category Card 5: Others -->
-                        <div id="cat-others" class="cat-card" onclick="navigateToCategory('others')">
-                            <div class="cat-emoji"><i class="fa-solid fa-boxes-stacked"></i></div>
-                            <span class="cat-title">Mặt Hàng Khác</span>
-                            <span class="cat-eta-badge">⚡ Nhận sáng mai</span>
-                        </div>
+                        @foreach ($categories as $cat)
+                            <div id="cat-{{ $cat->slug }}" class="cat-card" onclick="navigateToCategory('{{ $cat->slug }}')">
+                                <div class="cat-emoji"><i class="{{ $cat->icon_class }}"></i></div>
+                                <span class="cat-title">{{ $cat->name }}</span>
+                                <span class="cat-eta-badge">{{ $cat->eta_label }}</span>
+                            </div>
+                        @endforeach
                     </div>
 
                 </div>
@@ -2096,7 +1829,53 @@
 
                     <!-- Flash Sale Grid -->
                     <div class="products-grid" id="flashsale-products-container">
-                        <!-- Dynamic Flash Sale products by JS -->
+                        @foreach ($flashProducts as $product)
+                            @php
+                                $soldPercent = $product->stock > 0 ? round(($product->sold / ($product->stock + $product->sold)) * 100) : 0;
+                            @endphp
+                            <div class="product-card flash">
+                                <div class="discount-tag">-{{ $product->discount }}%</div>
+                                <div class="p-eta-badge">
+                                    <span>⚡</span> {{ $product->eta }}
+                                </div>
+                                <div class="p-img-area">
+                                    @if ($product->image_path)
+                                        <img src="{{ $product->image_path }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <i class="{{ $product->font_awesome_icon }}"></i>
+                                    @endif
+                                </div>
+                                <div class="p-info">
+                                    <div>
+                                        <span class="p-brand">{{ $product->brand }}</span>
+                                        <h3 class="p-name">{{ $product->name }}</h3>
+                                        <div class="progress-container">
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill" style="width: {{ $soldPercent }}%"></div>
+                                            </div>
+                                            <div class="progress-text">
+                                                <span>Đã bán {{ $product->sold }}</span>
+                                                <span>Còn {{ $product->stock }}</span>
+                                            </div>
+                                        </div>
+                                        @if ($product->category->slug === 'food' || $product->category->slug === 'drinks')
+                                            <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                                                <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="p-footer-row">
+                                        <div class="price-wrapper">
+                                            <span>Giá Flash Sale</span>
+                                            <span>{{ number_format($product->price, 0, ',', '.') }}đ <span class="old-price">{{ number_format($product->old_price, 0, ',', '.') }}đ</span></span>
+                                        </div>
+                                        <button class="add-to-cart-btn" onclick="addToCart({{ $product->id }})">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </section>
@@ -2116,7 +1895,44 @@
 
                     <!-- Featured Products Grid -->
                     <div class="products-grid" id="featured-products-container">
-                        <!-- Dynamic Featured products by JS -->
+                        @foreach ($featuredProducts as $product)
+                            <div class="product-card">
+                                <div class="p-eta-badge" style="background: rgba(220, 38, 38, 0.95); backdrop-filter: blur(4px);">
+                                    <span>🔥</span> BÁN CHẠY
+                                </div>
+                                <div class="p-img-area">
+                                    @if ($product->image_path)
+                                        <img src="{{ $product->image_path }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <i class="{{ $product->font_awesome_icon }}"></i>
+                                    @endif
+                                </div>
+                                <div class="p-info">
+                                    <div>
+                                        <span class="p-brand">{{ $product->brand }}</span>
+                                        <h3 class="p-name">{{ $product->name }}</h3>
+                                        <div class="p-stock">
+                                            <span class="stock-dot"></span>
+                                            <span class="stock-txt">Giao hỏa tốc {{ strtolower($product->eta) }}</span>
+                                        </div>
+                                        @if ($product->category->slug === 'food' || $product->category->slug === 'drinks')
+                                            <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                                                <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="p-footer-row">
+                                        <div class="price-wrapper">
+                                            <span>Giá bán lẻ</span>
+                                            <span>{{ number_format($product->price, 0, ',', '.') }}đ</span>
+                                        </div>
+                                        <button class="add-to-cart-btn" onclick="addToCart({{ $product->id }})">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </section>
@@ -2130,21 +1946,16 @@
                     </div>
 
                     <div class="how-grid">
-                        <!-- Step 1 -->
                         <div class="how-card">
                             <div class="how-num">1</div>
                             <h3>Đặt Hàng Gấp</h3>
                             <p>Chọn mặt hàng từ kho hàng nội thành có sẵn. Không cần ký gửi hay vận chuyển liên tỉnh.</p>
                         </div>
-
-                        <!-- Step 2 -->
                         <div class="how-card">
                             <div class="how-num">2</div>
                             <h3>Đóng Gói Ngay</h3>
                             <p>Kho xử lý đơn tự động đóng gói sản phẩm trong 10-15 phút kể từ lúc xác nhận đơn hàng.</p>
                         </div>
-
-                        <!-- Step 3 -->
                         <div class="how-card">
                             <div class="how-num">3</div>
                             <h3>Giao Trong Vài Giờ</h3>
@@ -2175,68 +1986,6 @@
                     </div>
                 </div>
             </section>
-        </div>
-
-
-        <!-- ================= CATEGORY DETAIL VIEW ================= -->
-        <div id="category-detail-view" class="container" style="display: none; padding: 30px 20px;">
-            <!-- Breadcrumbs -->
-            <div class="breadcrumbs">
-                <span onclick="goBackToHome()" style="cursor: pointer; hover:color:var(--primary)">Trang chủ</span>
-                <span class="sep">/</span>
-                <span id="breadcrumb-category" style="color: var(--text-main); font-weight: 800;">Tên danh mục</span>
-            </div>
-
-            <!-- Back Link -->
-            <div class="back-link" onclick="goBackToHome()">
-                <i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ
-            </div>
-
-            <!-- Banner Header -->
-            <div class="category-banner" id="category-banner-bg">
-                <div class="banner-info">
-                    <h2 id="category-banner-title">Tên danh mục</h2>
-                    <p id="category-banner-desc">Mô tả danh mục ngắn gọn</p>
-                </div>
-                <div class="banner-icon" id="category-banner-icon"><i class="fa-solid fa-gift"></i></div>
-            </div>
-
-            <!-- Main Layout: Sidebar & Content -->
-            <div class="category-layout">
-                
-                <!-- Sidebar filter -->
-                <aside class="category-sidebar">
-                    <div class="sidebar-title">Nhóm sản phẩm</div>
-                    <ul class="sidebar-menu" id="sidebar-subcategories-list">
-                        <!-- Dynamic sub-categories by JS -->
-                    </ul>
-                </aside>
-
-                <!-- Product Grid view -->
-                <div class="category-content">
-                    
-                    <div class="category-header-row">
-                        <div class="category-results-txt">
-                            Tìm thấy <span id="results-count" class="text-rose-600">0</span> sản phẩm khả dụng
-                        </div>
-                        <div>
-                            <select id="sort-select" onchange="sortCategoryProducts()" class="sort-dropdown">
-                                <option value="default">Sắp xếp: Mặc định</option>
-                                <option value="price-asc">Giá: Thấp đến Cao</option>
-                                <option value="price-desc">Giá: Cao đến Thấp</option>
-                                <option value="eta-asc">Giao hàng nhanh nhất</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Products Grid -->
-                    <div class="products-grid" id="category-products-container">
-                        <!-- Dynamic products by JS -->
-                    </div>
-
-                </div>
-
-            </div>
         </div>
 
     </main>
@@ -2300,7 +2049,22 @@
                 <i class="fa-solid fa-circle-check"></i>
                 <span>Giao siêu tốc trong 1-3 tiếng sau khi đặt!</span>
             </div>
-            <button class="cart-checkout-btn">Tiến Hành Đặt Hàng</button>
+
+            <!-- CHECKOUT FORM -->
+            <form action="/dat-hang" method="POST" id="checkout-form" class="checkout-form-container">
+                @csrf
+                <input type="hidden" name="items" id="checkout-items-json">
+                <div class="mb-2">
+                    <input type="text" name="customer_name" required placeholder="Họ tên người nhận" class="checkout-input">
+                </div>
+                <div class="mb-2">
+                    <input type="text" name="customer_phone" required placeholder="Số điện thoại giao hàng" class="checkout-input">
+                </div>
+                <div class="mb-2">
+                    <input type="text" name="customer_address" id="checkout-address-input" required placeholder="Địa chỉ giao nhận cụ thể" class="checkout-input">
+                </div>
+                <button type="submit" class="cart-checkout-btn">Tiến Hành Đặt Hàng</button>
+            </form>
         </div>
     </div>
 
@@ -2320,10 +2084,9 @@
                 <div class="footer-col">
                     <h4>Ngành hàng hỗ trợ</h4>
                     <ul class="footer-links">
-                        <li><a href="#" onclick="navigateToCategory('flowers')">Hoa Tươi Dịp Lễ</a></li>
-                        <li><a href="#" onclick="navigateToCategory('accessories')">Phụ Kiện Điện Thoại</a></li>
-                        <li><a href="#" onclick="navigateToCategory('drinks')">Trà Sữa & Đồ Uống</a></li>
-                        <li><a href="#" onclick="navigateToCategory('food')">Đồ Ăn & Thức Ăn Nhanh</a></li>
+                        @foreach ($categories as $cat)
+                            <li><a href="/danh-muc/{{ $cat->slug }}">{{ $cat->name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -2339,7 +2102,7 @@
 
                 <div class="footer-col">
                     <h4>Khu vực phục vụ</h4>
-                    <p style="font-size: 11px; line-height: 1.6;">Hỗ trợ giao hàng hỏa tốc tại các khu vực trung tâm TP. Hồ Chí Minh, Hà Nội, Đà Nẵng.</p>
+                    <p style="font-size: 11px; line-height: 1.6;">Hỗ trợ giao hàng hỏa tốc tại các khu vực trung tâm TP. Hồ Chí Minh trong phạm vi 25km.</p>
                 </div>
 
             </div>
@@ -2351,245 +2114,27 @@
         </div>
     </footer>
 
-    <!-- Vanilla Javascript Controllers -->
+    <!-- JS data seeding from backend -->
     <script>
-        // State variables
-        let currentView = 'home'; // 'home' or 'category'
-        let activeCategory = 'flowers';
-        let activeSubCategory = 'Tất cả';
-        let searchQuery = '';
-        let sortBy = 'default';
-        let deliveryAddress = 'Quận 1, TP. Hồ Chí Minh';
+        // Data populated from database
+        const products = @json($categories->flatMap->products);
+        const flashProducts = @json($flashProducts);
+        
+        let deliveryAddress = 'Quận 5, TP. Hồ Chí Minh';
         let cart = [];
-
-        // Seeded Products with subCategories
-        const products = [
-            // Flowers
-            { id: 1, category: 'flowers', subCategory: 'Bó hoa tươi', name: 'Bó hoa hướng dương rực rỡ (3 bông lớn)', price: 350000, fontAwesomeIcon: 'fa-solid fa-gift', eta: 'Giao trong 1 giờ', brand: 'Dalat Farm' },
-            { id: 2, category: 'flowers', subCategory: 'Bó hoa tươi', name: 'Bó hồng đỏ tình yêu cổ điển (9 bông)', price: 450000, fontAwesomeIcon: 'fa-solid fa-gift', eta: 'Giao trong 1.5 giờ', brand: 'Love Florist' },
-            { id: 3, category: 'flowers', subCategory: 'Cây trang trí', name: 'Chậu sen đá cảnh mini decor bàn làm việc', price: 85000, fontAwesomeIcon: 'fa-solid fa-seedling', eta: 'Giao trong 2 giờ', brand: 'Decor Garden' },
-            { id: 4, category: 'flowers', subCategory: 'Giỏ quả tặng', name: 'Giỏ hoa quả tươi cao cấp (Tặng kèm thiệp)', price: 600000, fontAwesomeIcon: 'fa-solid fa-gift', eta: 'Giao trong 2 giờ', brand: 'Fresh Gift' },
-            
-            // Accessories
-            { id: 5, category: 'accessories', subCategory: 'Ốp điện thoại', name: 'Ốp lưng iPhone 15 Pro Max Silicon chống sốc', price: 120000, fontAwesomeIcon: 'fa-solid fa-mobile-screen-button', eta: 'Giao trong 1 giờ', brand: 'Spigen' },
-            { id: 6, category: 'accessories', subCategory: 'Kính cường lực', name: 'Kính cường lực KingKong full màn hình 9H', price: 90000, fontAwesomeIcon: 'fa-solid fa-shield-halved', eta: 'Giao trong 1 giờ', brand: 'KingKong' },
-            { id: 7, category: 'accessories', subCategory: 'Tai nghe không dây', name: 'Tai nghe Bluetooth không dây Hoco EW45', price: 280000, fontAwesomeIcon: 'fa-solid fa-headphones', eta: 'Giao trong 1.5 giờ', brand: 'Hoco' },
-            { id: 8, category: 'accessories', subCategory: 'Cáp sạc & Pin', name: 'Cáp sạc nhanh Type-C to Lightning 20W', price: 95000, fontAwesomeIcon: 'fa-solid fa-plug', eta: 'Giao trong 1 giờ', brand: 'Anker' },
-
-            // Drinks
-            { id: 9, category: 'drinks', subCategory: 'Trà sữa', name: 'Trà sữa trân châu hoàng kim size L (Nhiều đá)', price: 55000, fontAwesomeIcon: 'fa-solid fa-mug-hot', eta: 'Giao trong 45 phút', brand: 'Gong Cha' },
-            { id: 10, category: 'drinks', subCategory: 'Trà hoa quả', name: 'Trà đào cam sả đá xay mát lạnh ngày hè', price: 48000, fontAwesomeIcon: 'fa-solid fa-glass-water', eta: 'Giao trong 45 phút', brand: 'The Coffee House' },
-            { id: 11, category: 'drinks', subCategory: 'Trà sữa', name: 'Matcha Latte macchiato kem sữa béo ngậy', price: 60000, fontAwesomeIcon: 'fa-solid fa-mug-hot', eta: 'Giao trong 45 phút', brand: 'Phúc Long' },
-            { id: 12, category: 'drinks', subCategory: 'Cà phê', name: 'Cafe muối đậm vị truyền thống Huế', price: 35000, fontAwesomeIcon: 'fa-solid fa-coffee', eta: 'Giao trong 30 phút', brand: 'Cà Phê Muối' },
-
-            // Food
-            { id: 13, category: 'food', subCategory: 'Gà rán & Burger', name: 'Gà rán giòn sốt cay Hàn Quốc (Combo 2 miếng)', price: 79000, fontAwesomeIcon: 'fa-solid fa-burger', eta: 'Giao trong 45 phút', brand: 'Lotteria' },
-            { id: 14, category: 'food', subCategory: 'Ăn vặt', name: 'Bánh tráng trộn khô bò full topping tép mỡ', price: 30000, fontAwesomeIcon: 'fa-solid fa-bowl-food', eta: 'Giao trong 30 phút', brand: 'Bánh Tráng Cô Ba' },
-            { id: 15, category: 'food', subCategory: 'Gà rán & Burger', name: 'Combo Burger Bò Phô Mai + Khoai tây chiên', price: 95000, fontAwesomeIcon: 'fa-solid fa-burger', eta: 'Giao trong 45 phút', brand: 'McDonalds' },
-            { id: 16, category: 'food', subCategory: 'Mì cay', name: 'Mì cay hải sản kim chi cấp độ 2 nóng hổi', price: 55000, fontAwesomeIcon: 'fa-solid fa-bowl-hot', eta: 'Giao trong 40 phút', brand: 'Mì Cay Seoul' },
-
-            // Others
-            { id: 17, category: 'others', subCategory: 'Cáp sạc & Pin', name: 'Sạc dự phòng dung lượng cao 10.000mAh', price: 350000, fontAwesomeIcon: 'fa-solid fa-battery-three-quarters', eta: 'Giao trong 1.5 giờ', brand: 'Xiaomi' },
-            { id: 18, category: 'others', name: 'Bó hoa sáp thơm cao cấp lưu hương lâu', price: 250000, fontAwesomeIcon: 'fa-solid fa-gift', eta: 'Giao trong 2 giờ', brand: 'Flower Corner' },
-            { id: 19, category: 'others', name: 'Hộp súp cua óc heo trứng bắc thảo nóng', price: 40000, fontAwesomeIcon: 'fa-solid fa-bowl-food', eta: 'Giao trong 30 phút', brand: 'Súp Cua Hạnh' }
-        ];
-
-        // Seeded Flash Sale Products
-        const flashProducts = [
-            { id: 101, category: 'flowers', name: 'Bó hồng đỏ tình yêu cổ điển (9 bông)', price: 315000, oldPrice: 450000, discount: 30, sold: 14, stock: 20, fontAwesomeIcon: 'fa-solid fa-gift', eta: 'Giao trong 1 giờ', brand: 'Love Florist' },
-            { id: 102, category: 'accessories', name: 'Tai nghe Bluetooth không dây Hoco EW45', price: 199000, oldPrice: 280000, discount: 29, sold: 18, stock: 25, fontAwesomeIcon: 'fa-solid fa-headphones', eta: 'Giao trong 1.5 giờ', brand: 'Hoco' },
-            { id: 103, category: 'drinks', name: 'Trà sữa trân châu hoàng kim size L', price: 39000, oldPrice: 55000, discount: 29, sold: 32, stock: 50, fontAwesomeIcon: 'fa-solid fa-mug-hot', eta: 'Giao trong 45 phút', brand: 'Gong Cha' },
-            { id: 104, category: 'food', name: 'Gà rán giòn sốt cay Hàn Quốc (Combo 2 miếng)', price: 49000, oldPrice: 79000, discount: 38, sold: 9, stock: 15, fontAwesomeIcon: 'fa-solid fa-burger', eta: 'Giao trong 45 phút', brand: 'Lotteria' }
-        ];
 
         // Format Currency
         function formatPrice(val) {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
         }
 
-        // Navigate to Category details view page
-        function navigateToCategory(cat) {
-            currentView = 'category';
-            activeCategory = cat;
-            activeSubCategory = 'Tất cả';
-            
-            // Toggle view visibility
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('category-detail-view').style.display = 'block';
-            
-            // Set header scroll view to top
-            window.scrollTo(0, 0);
-
-            // Render category header banner details
-            const catMeta = {
-                flowers: { title: 'Hoa Tươi Dịp Lễ', desc: 'Thiết kế hoa tươi đẹp mắt, hoa chúc mừng, sinh nhật, giao nhanh nội thành cam kết chất lượng hoa tươi.', iconClass: 'fa-solid fa-gift', bannerClass: 'banner-flowers' },
-                accessories: { title: 'Phụ Kiện Điện Thoại', desc: 'Ốp lưng thời trang, kính cường lực chất lượng cao, tai nghe bluetooth, dây sạc cáp chính hãng giao hỏa tốc.', iconClass: 'fa-solid fa-headphones', bannerClass: 'banner-accessories' },
-                drinks: { title: 'Trà Sữa & Nước Uống', desc: 'Giải khát tức thì với các loại trà sữa trân châu, trà đào, latte đá xay thơm ngon từ các thương hiệu nổi tiếng.', iconClass: 'fa-solid fa-mug-hot', bannerClass: 'banner-drinks' },
-                food: { title: 'Đồ Ăn & Thức Ăn Nhanh', desc: 'Burger bò phô mai, gà rán giòn rụm, bánh tráng trộn ăn vặt văn phòng giao nóng hổi trong 30-45 phút.', iconClass: 'fa-solid fa-burger', bannerClass: 'banner-food' },
-                others: { title: 'Mặt Hàng Khác', desc: 'Các mặt hàng pin sạc dự phòng, hoa sáp quà tặng và súp nóng thơm ngon phục vụ bạn giao nhanh.', iconClass: 'fa-solid fa-boxes-stacked', bannerClass: 'banner-others' }
-            };
-
-            const meta = catMeta[cat];
-            document.getElementById('breadcrumb-category').textContent = meta.title;
-            document.getElementById('category-banner-title').textContent = meta.title;
-            document.getElementById('category-banner-desc').textContent = meta.desc;
-            
-            // Set banner bg theme and icon
-            const bannerBg = document.getElementById('category-banner-bg');
-            bannerBg.className = 'category-banner ' + meta.bannerClass;
-            document.getElementById('category-banner-icon').innerHTML = `<i class="${meta.iconClass}"></i>`;
-
-            // Render Sidebar sub-categories
-            renderSidebar();
-            renderCategoryProducts();
+        // Navigate to Category details view page (Blade route for SEO)
+        function navigateToCategory(slug) {
+            window.location.href = `/danh-muc/${slug}`;
         }
 
-        // Return back to Home view
         function goBackToHome() {
-            currentView = 'home';
-            document.getElementById('category-detail-view').style.display = 'none';
-            document.getElementById('home-view').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        // Render Sidebar subcategories list
-        function renderSidebar() {
-            const listContainer = document.getElementById('sidebar-subcategories-list');
-            
-            // Extract subcategories for current category
-            const subCategories = ['Tất cả'];
-            products.forEach(p => {
-                if (p.category === activeCategory && p.subCategory && !subCategories.includes(p.subCategory)) {
-                    subCategories.push(p.subCategory);
-                }
-            });
-
-            listContainer.innerHTML = subCategories.map(sub => {
-                const isActive = activeSubCategory === sub;
-                // Count products in this sub-category
-                let count = 0;
-                if (sub === 'Tất cả') {
-                    count = products.filter(p => p.category === activeCategory).length;
-                } else {
-                    count = products.filter(p => p.category === activeCategory && p.subCategory === sub).length;
-                }
-
-                return `
-                    <li class="sidebar-menu-item ${isActive ? 'active' : ''}" onclick="filterSubCategory('${sub}')">
-                        <span>${sub}</span>
-                        <span class="count">${count}</span>
-                    </li>
-                `;
-            }).join('');
-        }
-
-        // Filter products by subcategory selection
-        function filterSubCategory(sub) {
-            activeSubCategory = sub;
-            renderSidebar();
-            renderCategoryProducts();
-        }
-
-        // Render Category products with filters and sorting
-        function renderCategoryProducts() {
-            const container = document.getElementById('category-products-container');
-            const countLbl = document.getElementById('results-count');
-
-            // 1. Filter by category
-            let filtered = products.filter(p => p.category === activeCategory);
-
-            // 2. Filter by subcategory
-            if (activeSubCategory !== 'Tất cả') {
-                filtered = filtered.filter(p => p.subCategory === activeSubCategory);
-            }
-
-            // 3. Filter by search query (if any)
-            if (searchQuery.trim() !== '') {
-                const query = searchQuery.toLowerCase().trim();
-                filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
-            }
-
-            // 4. Sorting logic
-            if (sortBy === 'price-asc') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (sortBy === 'price-desc') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else if (sortBy === 'eta-asc') {
-                // simple parse logic for eta matching (e.g. "Giao trong 30 phút" -> 30)
-                const getMinutes = (str) => {
-                    if (str.includes('phút')) {
-                        return parseInt(str.match(/\d+/)[0]);
-                    }
-                    if (str.includes('giờ')) {
-                        return parseFloat(str.match(/\d+(\.\d+)?/)[0]) * 60;
-                    }
-                    return 9999;
-                };
-                filtered.sort((a, b) => getMinutes(a.eta) - getMinutes(b.eta));
-            }
-
-            // Set result count label
-            countLbl.textContent = filtered.length;
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <span class="empty-icon"><i class="bi bi-search"></i></span>
-                        <h4 class="empty-title">Không tìm thấy sản phẩm</h4>
-                        <p class="empty-desc">Nhóm sản phẩm này chưa khả dụng tại kho gần nhất.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = filtered.map(product => `
-                <div class="product-card">
-                    <div class="p-eta-badge">
-                        <span>⚡</span> ${product.eta}
-                    </div>
-                    <div class="p-img-area">
-                        <i class="${product.fontAwesomeIcon}"></i>
-                    </div>
-                    <div class="p-info">
-                        <div>
-                            <span class="p-brand">${product.brand}</span>
-                            <h3 class="p-name">${product.name}</h3>
-                            <div class="p-stock">
-                                <span class="stock-dot"></span>
-                                <span class="stock-txt">Sẵn sàng giao</span>
-                            </div>
-                            ${(product.category === 'food' || product.category === 'drinks') ? `
-                                <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
-                                    <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
-                                </div>
-                            ` : ''}
-                        </div>
-                        <div class="p-footer-row">
-                            <div class="price-wrapper">
-                                <span>Giá bán lẻ</span>
-                                <span>${formatPrice(product.price)}</span>
-                            </div>
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Sort Select handling
-        function sortCategoryProducts() {
-            sortBy = document.getElementById('sort-select').value;
-            renderCategoryProducts();
-        }
-
-        // Filter products from search bar input
-        function filterProducts() {
-            searchQuery = document.getElementById('search-input').value;
-            if (currentView === 'category') {
-                renderCategoryProducts();
-            }
+            window.location.href = '/';
         }
 
         // Add to Cart
@@ -2612,7 +2157,7 @@
                 }
 
                 // 2. Check delivery restriction for food and drinks
-                if (product.category === 'food' || product.category === 'drinks') {
+                if (product.category_id === 3 || product.category_id === 4) { // Drinks/Food IDs
                     const allowedLocalDistricts = ['Quận 1', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 8', 'Quận 10', 'Quận 11', 'Q.1', 'Q.3', 'Q.4', 'Q.5', 'Q.6', 'Q.8', 'Q.10', 'Q.11', 'Q1', 'Q3', 'Q4', 'Q5', 'Q6', 'Q8', 'Q10', 'Q11', 'Bình Thạnh', 'Phú Nhuận'];
                     const isAllowedLocal = allowedLocalDistricts.some(d => addrLower.includes(d.toLowerCase()));
                     if (!isAllowedLocal) {
@@ -2629,6 +2174,9 @@
                     ...product
                 });
                 updateCartUI();
+                
+                // Show notification toast or open sidebar
+                toggleCart();
             }
         }
 
@@ -2644,6 +2192,7 @@
 
             const container = document.getElementById('cart-items-container');
             const totalLbl = document.getElementById('cart-total-lbl');
+            const checkoutItemsJson = document.getElementById('checkout-items-json');
             
             if (cart.length === 0) {
                 container.innerHTML = `
@@ -2653,12 +2202,15 @@
                     </div>
                 `;
                 totalLbl.textContent = '0 đ';
+                checkoutItemsJson.value = '[]';
                 return;
             }
 
             container.innerHTML = cart.map(item => `
                 <div class="cart-item">
-                    <span class="cart-item-emoji"><i class="${item.fontAwesomeIcon}"></i></span>
+                    <span class="cart-item-emoji">
+                        ${item.image_path ? `<img src="${item.image_path}" style="width: 32px; height: 32px; object-fit: cover; border-radius: 6px;">` : `<i class="${item.font_awesome_icon}"></i>`}
+                    </span>
                     <div class="cart-item-info">
                         <h4 class="cart-item-name">${item.name}</h4>
                         <span class="cart-item-eta">⚡ ${item.eta}</span>
@@ -2672,6 +2224,9 @@
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             totalLbl.textContent = formatPrice(total);
+            
+            // Populate hidden inputs for Laravel backend submit
+            checkoutItemsJson.value = JSON.stringify(cart);
         }
 
         // Toggle Cart Sidebar
@@ -2701,61 +2256,12 @@
             if (addr.trim() !== '') {
                 deliveryAddress = addr;
                 document.getElementById('delivery-address-lbl').textContent = addr;
+                document.getElementById('checkout-address-input').value = addr;
             }
             closeLocationModal();
         }
 
-        // Render Flash Sale products
-        function renderFlashSaleProducts() {
-            const container = document.getElementById('flashsale-products-container');
-            if (!container) return;
-
-            container.innerHTML = flashProducts.map(product => {
-                const soldPercent = Math.round((product.sold / product.stock) * 100);
-                return `
-                    <div class="product-card flash">
-                        <div class="discount-tag">-${product.discount}%</div>
-                        <div class="p-eta-badge">
-                            <span>⚡</span> ${product.eta}
-                        </div>
-                        <div class="p-img-area">
-                            <i class="${product.fontAwesomeIcon}"></i>
-                        </div>
-                        <div class="p-info">
-                            <div>
-                                <span class="p-brand">${product.brand}</span>
-                                <h3 class="p-name">${product.name}</h3>
-                                <div class="progress-container">
-                                    <div class="progress-bar-bg">
-                                        <div class="progress-bar-fill" style="width: ${soldPercent}%"></div>
-                                    </div>
-                                    <div class="progress-text">
-                                        <span>Đã bán ${product.sold}</span>
-                                        <span>Còn ${product.stock - product.sold}</span>
-                                    </div>
-                                </div>
-                                ${(product.category === 'food' || product.category === 'drinks') ? `
-                                    <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
-                                        <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
-                                    </div>
-                                ` : ''}
-                            </div>
-                            <div class="p-footer-row">
-                                <div class="price-wrapper">
-                                    <span>Giá Flash Sale</span>
-                                    <span>${formatPrice(product.price)} <span class="old-price">${formatPrice(product.oldPrice)}</span></span>
-                                </div>
-                                <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Start countdown timer for Flash Sale (counts down to 8 hours from now)
+        // Start countdown timer for Flash Sale
         function startFlashSaleTimer() {
             let hours = 2;
             let minutes = 14;
@@ -2774,7 +2280,6 @@
                             minutes = 59;
                             seconds = 59;
                         } else {
-                            // Reset to another 8 hours for demo
                             hours = 8;
                             minutes = 0;
                             seconds = 0;
@@ -2794,56 +2299,10 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Render Featured Products
-        function renderFeaturedProducts() {
-            const container = document.getElementById('featured-products-container');
-            if (!container) return;
-
-            // Pick 4 hot products from main list
-            const featuredIds = [1, 7, 9, 15];
-            const hotProducts = products.filter(p => featuredIds.includes(p.id));
-
-            container.innerHTML = hotProducts.map(product => `
-                <div class="product-card">
-                    <div class="p-eta-badge" style="background: rgba(220, 38, 38, 0.95); backdrop-filter: blur(4px);">
-                        <span>🔥</span> BÁN CHẠY
-                    </div>
-                    <div class="p-img-area">
-                        <i class="${product.fontAwesomeIcon}"></i>
-                    </div>
-                    <div class="p-info">
-                        <div>
-                            <span class="p-brand">${product.brand}</span>
-                            <h3 class="p-name">${product.name}</h3>
-                            <div class="p-stock">
-                                <span class="stock-dot"></span>
-                                <span class="stock-txt">Giao hỏa tốc ${product.eta.toLowerCase()}</span>
-                            </div>
-                            ${(product.category === 'food' || product.category === 'drinks') ? `
-                                <div style="font-size: 9px; color: #d84315; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
-                                    <i class="fa-solid fa-circle-exclamation"></i> Chỉ giao Q1, 3, 4, 5, 6, 8, 10, 11
-                                </div>
-                            ` : ''}
-                        </div>
-                        <div class="p-footer-row">
-                            <div class="price-wrapper">
-                                <span>Giá bán lẻ</span>
-                                <span>${formatPrice(product.price)}</span>
-                            </div>
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
         // Init render
         window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('checkout-address-input').value = deliveryAddress;
             updateCartUI();
-            renderFlashSaleProducts();
-            renderFeaturedProducts();
             startFlashSaleTimer();
         });
     </script>
