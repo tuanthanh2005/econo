@@ -1070,6 +1070,34 @@
 
         .modal-input-wrapper {
             margin-bottom: 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-locate-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(255, 87, 34, 0.2);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 750;
+            white-space: nowrap;
+            padding: 0 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-locate-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-locate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .modal-input {
@@ -2139,7 +2167,10 @@
             </div>
 
             <div class="modal-input-wrapper">
-                <input type="text" id="temp-address-input" placeholder="Nhập địa chỉ của bạn (VD: Quận 1, TP.HCM)..." class="modal-input">
+                <input type="text" id="temp-address-input" placeholder="Nhập địa chỉ của bạn (VD: Quận 1, TP.HCM)..." class="modal-input" style="flex-grow: 1;">
+                <button type="button" class="modal-locate-btn" onclick="triggerManualGeolocation()">
+                    <i class="fa-solid fa-location-crosshairs"></i> Tự động định vị
+                </button>
             </div>
             
             <div>
@@ -2552,6 +2583,56 @@
                     }
                 );
             }
+        }
+
+        // Manual geolocation trigger inside location modal
+        function triggerManualGeolocation() {
+            const btn = document.querySelector('.modal-locate-btn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang định vị...';
+            btn.disabled = true;
+
+            if (!navigator.geolocation) {
+                alert('Trình duyệt của bạn không hỗ trợ định vị vị trí.');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.display_name) {
+                                const address = data.display_name;
+                                document.getElementById('temp-address-input').value = address;
+                                console.log('📍 Định vị thủ công thành công:', address);
+                            }
+                            btn.innerHTML = originalHtml;
+                            btn.disabled = false;
+                        })
+                        .catch(err => {
+                            console.error('Lỗi lấy vị trí OSM:', err);
+                            btn.innerHTML = originalHtml;
+                            btn.disabled = false;
+                        });
+                },
+                (error) => {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                    
+                    if (error.code === error.PERMISSION_DENIED) {
+                        alert('⚠️ Quyền truy cập vị trí đã bị chặn.\n\nVui lòng bấm vào biểu tượng 🔒 hoặc ℹ️ trên thanh địa chỉ trình duyệt của bạn (góc trên bên trái), chọn "Cho phép truy cập vị trí" (Allow Location), sau đó nhấn lại nút này để định vị tự động nhé!');
+                    } else {
+                        alert('⚠️ Không thể lấy vị trí hiện tại: ' + error.message);
+                    }
+                },
+                { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+            );
         }
 
         function syncAddressToDatabase(addr) {
