@@ -2215,7 +2215,7 @@
         let cart = [];
 
         // Format Currency
-        const GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+        const GOOGLE_MAPS_API_KEY = 'AIzaSyDE-4tOfV3NT2DRxnOjUaaUe9hn9oCQMfM';
 
         function initGoogleAutocomplete() {
             if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') {
