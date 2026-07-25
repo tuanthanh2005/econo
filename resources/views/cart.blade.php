@@ -900,9 +900,14 @@
                             </div>
                         </div>
                         
-                        <div class="checkout-group" style="position: relative;">
+                        <div class="checkout-group" style="position: relative; margin-bottom: 20px;">
                             <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase;">Địa chỉ giao nhận cụ thể *</label>
                             <input type="text" name="customer_address" id="checkout-address-input" required placeholder="Nhập địa chỉ giao hàng cụ thể tại TP.HCM (Sử dụng gợi ý bên dưới)" class="checkout-input" style="font-size: 13.5px; padding: 14px;">
+                        </div>
+
+                        <div class="checkout-group">
+                            <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase;">Ghi chú đơn hàng (nếu có)</label>
+                            <textarea name="notes" placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi đến, đặt trước cửa nhà..." class="checkout-input" style="font-size: 13.5px; padding: 14px; min-height: 80px; font-family: inherit; resize: vertical;"></textarea>
                         </div>
                     </div>
                 </div>

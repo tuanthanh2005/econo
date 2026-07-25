@@ -71,7 +71,8 @@ class HomeController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|string|max:25',
             'customer_address' => 'required|string|max:500',
-            'items' => 'required|json'
+            'items' => 'required|json',
+            'notes' => 'nullable|string|max:1000'
         ]);
 
         $items = json_decode($request->items, true);
@@ -91,7 +92,8 @@ class HomeController extends Controller
                 'customer_address' => $request->customer_address,
                 'total_price' => 0, // updated after item sum
                 'status' => 'pending',
-                'delivery_eta' => '1 - 3 giờ'
+                'delivery_eta' => '1 - 3 giờ',
+                'notes' => $request->notes
             ]);
 
             // 2. Create Order Items
