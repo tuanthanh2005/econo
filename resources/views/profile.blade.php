@@ -277,6 +277,44 @@
         .favorite-remove-btn:hover {
             color: var(--secondary);
         }
+
+        /* Free OpenStreetMap Autocomplete Dropdown styling */
+        .osm-suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 9999;
+            max-height: 220px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 6px;
+            padding: 6px 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        .osm-suggestions-list.show {
+            display: block;
+        }
+
+        .osm-suggestion-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        .osm-suggestion-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -472,6 +510,7 @@
 
             renderFavorites();
             renderSavedAddresses();
+            setupOSMAutocomplete('new-address-input');
         });
 
         function getSavedAddresses() {
@@ -555,6 +594,72 @@
             favs = favs.filter(p => p.id !== productId);
             localStorage.setItem('user_favorites', JSON.stringify(favs));
             renderFavorites();
+        }
+
+        // Free OpenStreetMap Autocomplete setup
+        function setupOSMAutocomplete(inputId, onSelectCallback) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+
+            // Make sure parent is relative for dropdown alignment
+            input.parentNode.style.position = 'relative';
+
+            // Create suggestions container
+            const container = document.createElement('ul');
+            container.className = 'osm-suggestions-list';
+            input.parentNode.appendChild(container);
+
+            let debounceTimer;
+
+            input.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                const query = input.value.trim();
+                
+                if (query.length < 3) {
+                    container.classList.remove('show');
+                    return;
+                }
+
+                debounceTimer = setTimeout(() => {
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${encodeURIComponent(query)}&countrycodes=vn`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length === 0) {
+                                container.classList.remove('show');
+                                return;
+                            }
+
+                            container.innerHTML = data.map(item => `
+                                <li class="osm-suggestion-item" data-address="${item.display_name}">
+                                    <i class="fa-solid fa-map-pin text-muted" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 500;">${item.display_name}</span>
+                                </li>
+                            `).join('');
+                            container.classList.add('show');
+
+                            // Click item
+                            const items = container.querySelectorAll('.osm-suggestion-item');
+                            items.forEach(el => {
+                                el.addEventListener('click', () => {
+                                    const selectedAddress = el.getAttribute('data-address');
+                                    input.value = selectedAddress;
+                                    container.classList.remove('show');
+                                    if (onSelectCallback) {
+                                        onSelectCallback(selectedAddress);
+                                    }
+                                });
+                            });
+                        })
+                        .catch(err => console.error('OSM Fetch Error:', err));
+                }, 400);
+            });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (e.target !== input && e.target !== container) {
+                    container.classList.remove('show');
+                }
+            });
         }
     </script>
 
