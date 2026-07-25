@@ -2543,10 +2543,6 @@
                                         checkoutInput.value = address;
                                     }
                                     console.log('📍 Tự động bắt vị trí thành công:', address);
-                                    
-                                    if (isUserLoggedIn) {
-                                        syncAddressToDatabase(address);
-                                    }
                                 }
                             })
                             .catch(err => console.error('Lỗi lấy vị trí OSM:', err));
