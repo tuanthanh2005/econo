@@ -2512,6 +2512,37 @@
             }
         });
 
+        // Auto Detect User Location via Geolocation API & OSM Reverse Geocoding
+        function detectUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data && data.display_name) {
+                                    const address = data.display_name;
+                                    deliveryAddress = address;
+                                    document.getElementById('delivery-address-lbl').textContent = address;
+                                    const checkoutInput = document.getElementById('checkout-address-input');
+                                    if (checkoutInput) {
+                                        checkoutInput.value = address;
+                                    }
+                                    console.log('📍 Tự động bắt vị trí thành công:', address);
+                                }
+                            })
+                            .catch(err => console.error('Lỗi lấy vị trí OSM:', err));
+                    },
+                    (error) => {
+                        console.warn('⚠️ Quyền truy cập vị trí bị từ chối hoặc lỗi:', error.message);
+                    }
+                );
+            }
+        }
+
         // Init render
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('checkout-address-input').value = deliveryAddress;
@@ -2524,6 +2555,9 @@
                 deliveryAddress = selectedAddr;
                 document.getElementById('delivery-address-lbl').textContent = selectedAddr;
             });
+
+            // Auto detect location on load
+            detectUserLocation();
         });
     </script>
     <!-- FLOATING CHAT BUBBLES -->
