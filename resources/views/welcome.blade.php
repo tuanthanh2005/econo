@@ -2589,8 +2589,11 @@
                 }
             });
 
-            // Auto detect location on load
-            detectUserLocation();
+            // Auto detect location on load ONLY if user does not have a saved address in DB
+            const hasSavedAddress = @json(auth()->check() && !empty(auth()->user()->address));
+            if (!hasSavedAddress) {
+                detectUserLocation();
+            }
         });
     </script>
     <!-- FLOATING CHAT BUBBLES -->
