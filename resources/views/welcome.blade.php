@@ -965,6 +965,11 @@
         .shield-card h3 { font-size: 16px; font-weight: 800; }
         .shield-card p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
 
+        /* Force Google Places Autocomplete dropdown to appear above modal */
+        .pac-container {
+            z-index: 9999 !important;
+        }
+
         /* LOCATION MODAL */
         .modal {
             position: fixed;
