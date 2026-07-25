@@ -128,4 +128,35 @@ class HomeController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        $orders = Order::where('user_id', $user->id)
+                       ->with('items.product')
+                       ->orderBy('created_at', 'desc')
+                       ->get();
+
+        return view('profile', compact('user', 'orders'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
+
+        return back()->with('success', 'Cập nhật thông tin tài khoản thành công.');
+    }
 }

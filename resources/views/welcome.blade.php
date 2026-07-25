@@ -1645,6 +1645,70 @@
             justify-content: space-between;
             margin-top: 4px;
         }
+
+        /* User Account Dropdown */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-btn {
+            background: #f1f5f9;
+            color: var(--text-main);
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .user-dropdown-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            min-width: 210px;
+            display: none;
+            flex-direction: column;
+            padding: 8px 0;
+            z-index: 150;
+        }
+
+        .user-dropdown-menu.open {
+            display: flex;
+        }
+
+        .user-dropdown-menu a {
+            padding: 10px 18px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .user-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background: #f1f5f9;
+            margin: 6px 0;
+        }
     </style>
 </head>
 <body>
@@ -1689,7 +1753,19 @@
                         @if (Auth::user()->role === 'superadmin')
                             <a href="/admin/dashboard" class="login-btn" style="text-decoration: none;"><i class="fa-solid fa-gauge me-1"></i> Admin</a>
                         @else
-                            <a href="/logout" class="login-btn" style="text-decoration: none; background: #334155;"><i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Thoát</a>
+                            <div class="user-dropdown">
+                                <button class="user-dropdown-btn" onclick="toggleUserDropdown(event)">
+                                    <i class="fa-regular fa-user me-1"></i> {{ Auth::user()->name }}
+                                </button>
+                                <div class="user-dropdown-menu" id="user-dropdown-menu">
+                                    <a href="/tai-khoan"><i class="fa-solid fa-receipt me-2"></i> Đơn hàng của tôi</a>
+                                    <a href="/tai-khoan?tab=favorites"><i class="fa-solid fa-heart me-2"></i> Sản phẩm yêu thích</a>
+                                    <a href="/tai-khoan?tab=addresses"><i class="fa-solid fa-map-location-dot me-2"></i> Sổ địa chỉ</a>
+                                    <a href="/tai-khoan?tab=profile"><i class="fa-solid fa-user me-2"></i> Hồ sơ tài khoản</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="/logout" class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng xuất</a>
+                                </div>
+                            </div>
                         @endif
                     @else
                         <a href="/login" class="login-btn" style="text-decoration: none;">Đăng nhập</a>
@@ -2307,6 +2383,23 @@
 
             setInterval(updateTimer, 1000);
         }
+
+        // Toggle User Account Dropdown
+        function toggleUserDropdown(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('user-dropdown-menu');
+            if (menu) {
+                menu.classList.toggle('open');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', () => {
+            const menu = document.getElementById('user-dropdown-menu');
+            if (menu && menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        });
 
         // Init render
         window.addEventListener('DOMContentLoaded', () => {

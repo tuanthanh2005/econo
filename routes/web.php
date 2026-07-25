@@ -20,6 +20,12 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// ================= USER ACCOUNT PROFILE =================
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tai-khoan', [HomeController::class, 'profile'])->name('profile');
+    Route::post('/tai-khoan/cap-nhat', [HomeController::class, 'updateProfile'])->name('profile.update');
+});
+
 // ================= BACKEND (SUPERADMIN) =================
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
