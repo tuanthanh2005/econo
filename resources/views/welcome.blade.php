@@ -2001,7 +2001,7 @@
                                 <div class="p-eta-badge">
                                     <span>⚡</span> {{ $product->eta }}
                                 </div>
-                                <div class="p-img-area">
+                                <div class="p-img-area" onclick="openProductDetailModal({{ $product->id }})" style="cursor: pointer;">
                                     @if ($product->image_path)
                                         <img src="{{ $product->image_path }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
@@ -2011,7 +2011,7 @@
                                 <div class="p-info">
                                     <div>
                                         <span class="p-brand">{{ $product->brand }}</span>
-                                        <h3 class="p-name">{{ $product->name }}</h3>
+                                        <h3 class="p-name" onclick="openProductDetailModal({{ $product->id }})" style="cursor: pointer;">{{ $product->name }}</h3>
                                         <div class="progress-container">
                                             <div class="progress-bar-bg">
                                                 <div class="progress-bar-fill" style="width: {{ $soldPercent }}%"></div>
@@ -2063,7 +2063,7 @@
                                 <div class="p-eta-badge" style="background: rgba(220, 38, 38, 0.95); backdrop-filter: blur(4px);">
                                     <span>🔥</span> BÁN CHẠY
                                 </div>
-                                <div class="p-img-area">
+                                <div class="p-img-area" onclick="openProductDetailModal({{ $product->id }})" style="cursor: pointer;">
                                     @if ($product->image_path)
                                         <img src="{{ $product->image_path }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
@@ -2073,7 +2073,7 @@
                                 <div class="p-info">
                                     <div>
                                         <span class="p-brand">{{ $product->brand }}</span>
-                                        <h3 class="p-name">{{ $product->name }}</h3>
+                                        <h3 class="p-name" onclick="openProductDetailModal({{ $product->id }})" style="cursor: pointer;">{{ $product->name }}</h3>
                                         <div class="p-stock">
                                             <span class="stock-dot"></span>
                                             <span class="stock-txt">Giao hỏa tốc {{ strtolower($product->eta) }}</span>
@@ -2191,6 +2191,53 @@
         </div>
     </div>
 
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="modal" id="product-detail-modal">
+        <div class="modal-backdrop" onclick="closeProductDetailModal()"></div>
+        <div class="modal-content" style="max-width: 500px; padding: 25px;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 16px;">
+                <h3 style="font-size: 16px; font-weight: 850; color: var(--text-color);"><i class="fa-solid fa-circle-info text-primary me-2"></i> Chi tiết sản phẩm</h3>
+                <button class="close-btn" onclick="closeProductDetailModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="max-height: 55vh; overflow-y: auto; padding-right: 6px; margin-bottom: 16px;">
+                <div id="detail-product-image-container" style="width: 100%; height: 230px; border-radius: 16px; overflow: hidden; margin-bottom: 16px; background: #f8fafc; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;">
+                    <img id="detail-product-image" src="" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 12px;">
+                    <div>
+                        <span id="detail-product-brand" class="p-brand" style="font-size: 10px; text-transform: uppercase; color: var(--primary); font-weight: 800; background: var(--primary-light); padding: 2px 8px; border-radius: 4px;">Brand</span>
+                        <h4 id="detail-product-title" style="font-size: 17px; font-weight: 850; margin-top: 6px; color: var(--text-color); line-height: 1.3;">Tên sản phẩm</h4>
+                    </div>
+                    <div style="text-align: right;">
+                        <span id="detail-product-eta" style="background: rgba(220, 38, 38, 0.08); color: var(--primary); font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; white-space: nowrap; display: inline-block;">⚡ Giao hỏa tốc</span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px; background: #f8fafc; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 2px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Giá bán hỏa tốc</span>
+                    <div style="display: flex; align-items: baseline;">
+                        <span id="detail-product-price" style="font-size: 20px; font-weight: 900; color: var(--primary);">120.000đ</span>
+                        <span id="detail-product-old-price" class="old-price" style="font-size: 13px; text-decoration: line-through; color: var(--text-muted); margin-left: 8px; font-weight: 600;">150.000đ</span>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid var(--border-color); padding-top: 14px;">
+                    <h5 style="font-size: 13px; font-weight: 800; margin-bottom: 6px; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.5px;">Mô tả sản phẩm</h5>
+                    <p id="detail-product-description" style="font-size: 12.5px; line-height: 1.6; color: var(--text-muted); white-space: pre-line; margin-bottom: 0;">Mô tả chi tiết...</p>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding-top: 14px; border-top: 1px solid var(--border-color); margin-top: 0; display: flex; gap: 10px;">
+                <button class="modal-btn cancel" onclick="closeProductDetailModal()" style="flex: 1; padding: 10px; font-size: 13px;">Đóng</button>
+                <button id="detail-add-to-cart-btn" class="modal-btn confirm" style="flex: 2; background: var(--primary); color: white; padding: 10px; font-size: 13px; font-weight: 800;">
+                    <i class="fa-solid fa-cart-plus me-1"></i> Thêm Vào Giỏ Hàng
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- CART SIDEBAR -->
     <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar" id="cart-sidebar">
@@ -2207,9 +2254,17 @@
         </div>
 
         <div class="cart-footer">
-            <div class="cart-total-row">
-                <span>Tổng tiền:</span>
-                <span id="cart-total-lbl">0 đ</span>
+            <div class="cart-total-row" style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">
+                <span>Tạm tính:</span>
+                <span id="cart-subtotal-lbl">0 đ</span>
+            </div>
+            <div class="cart-total-row" style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+                <span>Phí giao hàng hỏa tốc:</span>
+                <span id="cart-shipping-lbl">0 đ</span>
+            </div>
+            <div class="cart-total-row" style="border-top: 1px dashed var(--border-color); padding-top: 8px; margin-bottom: 12px;">
+                <span style="font-weight: 800; font-size: 15px;">Tổng cộng:</span>
+                <span id="cart-total-lbl" style="font-weight: 800; font-size: 16px; color: var(--primary);">0 đ</span>
             </div>
             <div class="cart-promo-banner" id="cart-eta-promo-lbl">
                 <i class="fa-solid fa-circle-check"></i>
@@ -2427,6 +2482,58 @@
             }
         }
 
+        // Product Detail Modal controls
+        function openProductDetailModal(productId) {
+            let product = products.find(p => p.id === productId);
+            if (!product) {
+                product = flashProducts.find(p => p.id === productId);
+            }
+            if (!product) return;
+
+            document.getElementById('detail-product-title').textContent = product.name;
+            document.getElementById('detail-product-brand').textContent = product.brand || 'GIAO CẤP TỐC';
+            document.getElementById('detail-product-description').textContent = product.description || 'Sản phẩm giao hỏa tốc chất lượng cao từ hệ thống Giao Cấp Tốc.';
+            
+            // ETA display
+            const distance = calculateDistance(deliveryLat, deliveryLon, WAREHOUSE_LAT, WAREHOUSE_LON);
+            let etaMinutes = Math.round(20 + distance * 1.7);
+            if (etaMinutes < 25) etaMinutes = 25;
+            document.getElementById('detail-product-eta').textContent = `⚡ Giao dự kiến: ${etaMinutes} phút`;
+
+            const img = document.getElementById('detail-product-image');
+            if (product.image_path) {
+                img.src = product.image_path;
+                img.style.display = 'block';
+                document.getElementById('detail-product-image-container').style.display = 'flex';
+            } else {
+                img.style.display = 'none';
+                document.getElementById('detail-product-image-container').style.display = 'none';
+            }
+
+            // Prices
+            document.getElementById('detail-product-price').textContent = formatPrice(product.price);
+            const oldPriceEl = document.getElementById('detail-product-old-price');
+            if (product.old_price && product.old_price > product.price) {
+                oldPriceEl.textContent = formatPrice(product.old_price);
+                oldPriceEl.style.display = 'inline';
+            } else {
+                oldPriceEl.style.display = 'none';
+            }
+
+            // Add to cart button action
+            const addBtn = document.getElementById('detail-add-to-cart-btn');
+            addBtn.onclick = () => {
+                addToCart(product.id);
+                closeProductDetailModal();
+            };
+
+            document.getElementById('product-detail-modal').classList.add('open');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('product-detail-modal').classList.remove('open');
+        }
+
         // Add to Cart
         function addToCart(productId) {
             let product = products.find(p => p.id === productId);
@@ -2493,6 +2600,8 @@
                         <span>Giỏ hàng trống.</span>
                     </div>
                 `;
+                if (document.getElementById('cart-subtotal-lbl')) document.getElementById('cart-subtotal-lbl').textContent = '0 đ';
+                if (document.getElementById('cart-shipping-lbl')) document.getElementById('cart-shipping-lbl').textContent = '0 đ';
                 totalLbl.textContent = '0 đ';
                 checkoutItemsJson.value = '[]';
                 return;
@@ -2515,7 +2624,18 @@
             `).join('');
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalLbl.textContent = formatPrice(total);
+            
+            // Calculate shipping fee: 15.000đ base + 7.000đ per km
+            const distance = calculateDistance(deliveryLat, deliveryLon, WAREHOUSE_LAT, WAREHOUSE_LON);
+            const shippingFee = Math.round(15000 + distance * 7000);
+            const finalTotal = total + shippingFee;
+
+            const subtotalLbl = document.getElementById('cart-subtotal-lbl');
+            const shippingLbl = document.getElementById('cart-shipping-lbl');
+            
+            if (subtotalLbl) subtotalLbl.textContent = formatPrice(total);
+            if (shippingLbl) shippingLbl.textContent = formatPrice(shippingFee);
+            totalLbl.textContent = formatPrice(finalTotal);
             
             // Populate hidden inputs for Laravel backend submit
             checkoutItemsJson.value = JSON.stringify(cart);
