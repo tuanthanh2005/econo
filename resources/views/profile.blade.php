@@ -438,6 +438,20 @@
                     <div class="tab-pane fade" id="v-pills-addresses" role="tabpanel">
                         <h3 class="card-title">Sổ địa chỉ giao hàng</h3>
                         
+                        <!-- Default Address (Saved in Database) -->
+                        <div class="card mb-4 border-0 rounded-4" style="background: var(--primary-light);">
+                            <div class="card-body p-4">
+                                <h5 class="fs-6 fw-bold mb-2 text-primary"><i class="fa-solid fa-map-pin me-2"></i> Địa chỉ giao hàng mặc định (Hệ thống)</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="fw-semibold text-dark" style="font-size: 13px;" id="db-address-text">
+                                        {{ $user->address ?? 'Chưa thiết lập địa chỉ mặc định trong hệ thống.' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add new address (Saves to LocalStorage) -->
+                        <h5 class="fs-6 fw-bold mb-3 text-secondary"><i class="fa-solid fa-book-bookmark me-2"></i> Danh sách địa chỉ khác</h5>
                         <form id="add-address-form" class="mb-4" onsubmit="saveNewAddress(event)">
                             <div class="input-group">
                                 <input type="text" id="new-address-input" required class="form-control rounded-start-3" placeholder="Nhập địa chỉ giao hàng mới (VD: 123 Nguyễn Trãi, Quận 5)...">
