@@ -159,4 +159,22 @@ class HomeController extends Controller
 
         return back()->with('success', 'Cập nhật thông tin tài khoản thành công.');
     }
+
+    public function updateAddress(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'address' => 'required|string|max:500'
+        ]);
+
+        $user->update([
+            'address' => $request->address
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Địa chỉ đã được đồng bộ vào hệ thống.']);
+    }
 }

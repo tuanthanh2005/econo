@@ -24,6 +24,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/tai-khoan', [HomeController::class, 'profile'])->name('profile');
     Route::post('/tai-khoan/cap-nhat', [HomeController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/tai-khoan/cap-nhat-dia-chi', [HomeController::class, 'updateAddress'])->name('profile.update_address');
 });
 
 // ================= BACKEND (SUPERADMIN) =================

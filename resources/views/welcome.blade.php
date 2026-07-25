@@ -2255,7 +2255,8 @@
         const products = @json($categories->flatMap->products);
         const flashProducts = @json($flashProducts);
         
-        let deliveryAddress = 'Quận 5, TP. Hồ Chí Minh';
+        const isUserLoggedIn = @json(auth()->check());
+        let deliveryAddress = @json(auth()->user()->address ?? 'Quận 5, TP. Hồ Chí Minh');
         let cart = [];
 
         // Format Currency
@@ -2459,6 +2460,10 @@
                 deliveryAddress = addr;
                 document.getElementById('delivery-address-lbl').textContent = addr;
                 document.getElementById('checkout-address-input').value = addr;
+                
+                if (isUserLoggedIn) {
+                    syncAddressToDatabase(addr);
+                }
             }
             closeLocationModal();
         }
@@ -2538,6 +2543,10 @@
                                         checkoutInput.value = address;
                                     }
                                     console.log('📍 Tự động bắt vị trí thành công:', address);
+                                    
+                                    if (isUserLoggedIn) {
+                                        syncAddressToDatabase(address);
+                                    }
                                 }
                             })
                             .catch(err => console.error('Lỗi lấy vị trí OSM:', err));
@@ -2549,9 +2558,28 @@
             }
         }
 
+        function syncAddressToDatabase(addr) {
+            fetch('/tai-khoan/cap-nhat-dia-chi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ address: addr })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('✅ Địa chỉ đã được đồng bộ vào Database:', addr);
+                }
+            })
+            .catch(err => console.error('Lỗi lưu địa chỉ vào DB:', err));
+        }
+
         // Init render
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('checkout-address-input').value = deliveryAddress;
+            document.getElementById('delivery-address-lbl').textContent = deliveryAddress;
             updateCartUI();
             startFlashSaleTimer();
             
@@ -2560,6 +2588,9 @@
             setupOSMAutocomplete('checkout-address-input', (selectedAddr) => {
                 deliveryAddress = selectedAddr;
                 document.getElementById('delivery-address-lbl').textContent = selectedAddr;
+                if (isUserLoggedIn) {
+                    syncAddressToDatabase(selectedAddr);
+                }
             });
 
             // Auto detect location on load
