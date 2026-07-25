@@ -2625,7 +2625,7 @@
                     btn.innerHTML = originalHtml;
                     btn.disabled = false;
                     
-                    if (error.code === error.PERMISSION_DENIED) {
+                    if (error.code === 1) { // 1 is PERMISSION_DENIED
                         alert('⚠️ Quyền truy cập vị trí đã bị chặn.\n\nVui lòng bấm vào biểu tượng 🔒 hoặc ℹ️ trên thanh địa chỉ trình duyệt của bạn (góc trên bên trái), chọn "Cho phép truy cập vị trí" (Allow Location), sau đó nhấn lại nút này để định vị tự động nhé!');
                     } else {
                         alert('⚠️ Không thể lấy vị trí hiện tại: ' + error.message);
