@@ -171,6 +171,10 @@ class HomeController extends Controller
             'address' => 'required|string|max:500'
         ]);
 
+        if ($user->address === $request->address) {
+            return response()->json(['success' => true, 'message' => 'Địa chỉ không đổi.']);
+        }
+
         $user->update([
             'address' => $request->address
         ]);

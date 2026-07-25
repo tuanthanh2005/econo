@@ -2288,6 +2288,7 @@
         
         const isUserLoggedIn = @json(auth()->check());
         let deliveryAddress = @json(auth()->user()->address ?? 'Quận 5, TP. Hồ Chí Minh');
+        let lastSyncedAddress = deliveryAddress;
         let cart = [];
 
         // Format Currency
@@ -2636,6 +2637,11 @@
         }
 
         function syncAddressToDatabase(addr) {
+            if (addr === lastSyncedAddress) {
+                console.log('ℹ️ Địa chỉ trùng khớp với cache, không gửi request sync DB.');
+                return;
+            }
+
             fetch('/tai-khoan/cap-nhat-dia-chi', {
                 method: 'POST',
                 headers: {
@@ -2647,6 +2653,7 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    lastSyncedAddress = addr;
                     console.log('✅ Địa chỉ đã được đồng bộ vào Database:', addr);
                 }
             })
