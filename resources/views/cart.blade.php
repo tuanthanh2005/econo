@@ -868,63 +868,75 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="container">
-        <div class="cart-page-layout">
+    <main class="container" style="margin-top: 30px; margin-bottom: 50px;">
+        <form action="/dat-hang" method="POST" id="checkout-form">
+            @csrf
+            <input type="hidden" name="items" id="checkout-items-json">
             
-            <!-- Left Column: Cart items -->
-            <div class="cart-section-card">
-                <h2 class="cart-section-title"><i class="bi bi-cart3"></i> Giỏ hàng tạm tính</h2>
+            <div class="cart-page-layout">
                 
-                <div class="cart-page-items" id="cart-page-items-container">
-                    <!-- Loaded dynamically via Javascript -->
-                </div>
-            </div>
-
-            <!-- Right Column: Checkout Billing & Customer Info -->
-            <div class="checkout-section-card">
-                <h2 class="checkout-section-title"><i class="fa-regular fa-credit-card"></i> Thông tin thanh toán</h2>
-                
-                <div class="summary-totals">
-                    <div class="summary-row">
-                        <span>Tạm tính:</span>
-                        <span id="cart-subtotal-lbl">0 đ</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Phí giao hàng hỏa tốc:</span>
-                        <span id="cart-shipping-lbl">0 đ</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Tổng cộng:</span>
-                        <span id="cart-total-lbl">0 đ</span>
-                    </div>
-                </div>
-
-                <div class="cart-promo-banner" id="cart-eta-promo-lbl">
-                    <i class="fa-solid fa-truck-fast text-primary"></i> Giao hỏa tốc khoảng <strong>-- phút</strong>
-                </div>
-
-                <!-- CHECKOUT FORM -->
-                <form action="/dat-hang" method="POST" id="checkout-form" class="checkout-form-container">
-                    @csrf
-                    <input type="hidden" name="items" id="checkout-items-json">
+                <!-- Left Column: Cart items & Delivery Address -->
+                <div class="cart-section-card">
+                    <h2 class="cart-section-title"><i class="bi bi-cart3"></i> Giỏ hàng tạm tính</h2>
                     
-                    <div class="checkout-group">
-                        <input type="text" name="customer_name" required placeholder="Họ tên người nhận" class="checkout-input">
+                    <div class="cart-page-items" id="cart-page-items-container" style="margin-bottom: 30px;">
+                        <!-- Loaded dynamically via Javascript -->
                     </div>
-                    <div class="checkout-group">
-                        <input type="text" name="customer_phone" required placeholder="Số điện thoại giao hàng" class="checkout-input">
+
+                    <!-- Input Delivery Info Section on the Left Side -->
+                    <div style="border-top: 2px dashed var(--border-color); padding-top: 30px; margin-top: 30px;">
+                        <h3 class="cart-section-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 20px;">
+                            <i class="fa-solid fa-truck-fast"></i> Thông tin nhận hàng hỏa tốc
+                        </h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                            <div class="checkout-group">
+                                <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase;">Họ tên người nhận *</label>
+                                <input type="text" name="customer_name" required placeholder="Nhập họ tên người nhận" class="checkout-input" style="font-size: 13.5px; padding: 14px;">
+                            </div>
+                            <div class="checkout-group">
+                                <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase;">Số điện thoại giao hàng *</label>
+                                <input type="text" name="customer_phone" required placeholder="Nhập số điện thoại nhận hàng" class="checkout-input" style="font-size: 13.5px; padding: 14px;">
+                            </div>
+                        </div>
+                        
+                        <div class="checkout-group" style="position: relative;">
+                            <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase;">Địa chỉ giao nhận cụ thể *</label>
+                            <input type="text" name="customer_address" id="checkout-address-input" required placeholder="Nhập địa chỉ giao hàng cụ thể tại TP.HCM (Sử dụng gợi ý bên dưới)" class="checkout-input" style="font-size: 13.5px; padding: 14px;">
+                        </div>
                     </div>
-                    <div class="checkout-group">
-                        <input type="text" name="customer_address" id="checkout-address-input" required placeholder="Địa chỉ giao nhận cụ thể" class="checkout-input">
-                    </div>
+                </div>
+
+                <!-- Right Column: Checkout Billing Summary -->
+                <div class="checkout-section-card">
+                    <h2 class="checkout-section-title"><i class="fa-regular fa-credit-card"></i> Thông tin thanh toán</h2>
                     
-                    <button type="submit" class="checkout-submit-btn">
+                    <div class="summary-totals">
+                        <div class="summary-row">
+                            <span>Tạm tính:</span>
+                            <span id="cart-subtotal-lbl">0 đ</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Phí giao hàng hỏa tốc:</span>
+                            <span id="cart-shipping-lbl">0 đ</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Tổng cộng:</span>
+                            <span id="cart-total-lbl">0 đ</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-promo-banner" id="cart-eta-promo-lbl" style="margin-bottom: 24px;">
+                        <i class="fa-solid fa-truck-fast text-primary"></i> Giao hỏa tốc khoảng <strong>-- phút</strong>
+                    </div>
+
+                    <button type="submit" class="checkout-submit-btn" style="padding: 16px; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;">
                         <i class="fa-solid fa-paper-plane"></i> Tiến Hành Đặt Hàng
                     </button>
-                </form>
-            </div>
+                </div>
 
-        </div>
+            </div>
+        </form>
     </main>
 
     <!-- FOOTER -->
